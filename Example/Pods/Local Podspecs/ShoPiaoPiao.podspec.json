@@ -1,0 +1,22 @@
+{
+  "name": "ShoPiaoPiao",
+  "version": "0.1.0",
+  "summary": "A short description of ShoPiaoPiao.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/liuyibo/ShoPiaoPiao",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "liuyibo": "liuyibo@shopee.com"
+  },
+  "source": {
+    "git": "https://github.com/liuyibo/ShoPiaoPiao.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "ShoPiaoPiao/Classes/**/*"
+}

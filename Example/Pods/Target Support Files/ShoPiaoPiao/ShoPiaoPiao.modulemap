@@ -1,0 +1,6 @@
+framework module ShoPiaoPiao {
+  umbrella header "ShoPiaoPiao-umbrella.h"
+
+  export *
+  module * { export * }
+}
