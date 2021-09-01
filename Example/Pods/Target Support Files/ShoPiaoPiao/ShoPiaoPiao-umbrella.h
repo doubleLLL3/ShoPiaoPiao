@@ -10,9 +10,9 @@
 #endif
 #endif
 
-#import "HomeViewController.h"
-#import "HomeTableView.h"
-#import "IntroTableViewCell.h"
+#import "BKEHomeViewController.h"
+#import "BKEHomeTableView.h"
+#import "BKEIntroTableViewCell.h"
 
 FOUNDATION_EXPORT double ShoPiaoPiaoVersionNumber;
 FOUNDATION_EXPORT const unsigned char ShoPiaoPiaoVersionString[];

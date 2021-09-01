@@ -1,5 +1,5 @@
 //
-//  HomeViewController.h
+//  BKEHomeViewController.h
 //  ShoPiaoPiao
 //
 //  Created by 刘一博 on 2021/8/11.
@@ -9,10 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HomeViewController : UINavigationController
-
-
-
+@interface BKEHomeViewController : UIViewController
 @end
 
 NS_ASSUME_NONNULL_END

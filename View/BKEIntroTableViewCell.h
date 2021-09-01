@@ -1,5 +1,5 @@
 //
-//  IntroTableViewCell.h
+//  BKEIntroTableViewCell.h
 //  ShoPiaoPiao
 //
 //  Created by 刘一博 on 2021/8/11.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IntroTableViewCell : UITableViewCell
+@interface BKEIntroTableViewCell : UITableViewCell
 
 @end
 

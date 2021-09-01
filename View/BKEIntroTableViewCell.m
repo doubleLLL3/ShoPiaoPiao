@@ -1,13 +1,13 @@
 //
-//  IntroTableViewCell.m
+//  BKEIntroTableViewCell.m
 //  ShoPiaoPiao
 //
 //  Created by 刘一博 on 2021/8/11.
 //
 
-#import "IntroTableViewCell.h"
+#import "BKEIntroTableViewCell.h"
 
-@implementation IntroTableViewCell
+@implementation BKEIntroTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
