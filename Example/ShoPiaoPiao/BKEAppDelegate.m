@@ -21,14 +21,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.homeViewController = [[BKEHomeViewController alloc] init];
+    
     UINavigationController *homeNavigationController = [[UINavigationController alloc] initWithRootViewController:self.homeViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    self.window.rootViewController = self.homeViewController;
+    self.window.rootViewController = homeNavigationController;
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+#pragma mark - Getter
+
+- (BKEHomeViewController *)homeViewController {
+    if (!_homeViewController) {
+        _homeViewController = [[BKEHomeViewController alloc] init];
+    }
+    return _homeViewController;
 }
 
 @end

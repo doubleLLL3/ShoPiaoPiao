@@ -11,7 +11,7 @@
 
 @interface BKEHomeViewController () <UITableViewDataSource, UITableViewDelegate, BKEHomeTableViewCellDelegate>
 
-@property(nonatomic, strong, readwrite) UITableView *tableView;
+@property(nonatomic, strong, readwrite) UITableView *homeTableView;
 
 @end
 
@@ -27,24 +27,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.view addSubview:({
-        self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-        self.tableView.backgroundColor = [UIColor whiteColor];
-        self.tableView.dataSource = self;
-        self.tableView.delegate = self;
-        self.tableView;
-    })];
+
+    [self.view addSubview:self.homeTableView];
     
     return ;
 }
 
-#pragma mark - Delegate
-
-// 每个Cell的行高
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
-}
+#pragma mark - UITableViewDataSource
 
 // 一次缓冲的Cell数量
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -64,6 +53,13 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+// 每个Cell的行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
+}
+
 // 点击Cell后响应的View
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BKEIntroViewController *introController = [[BKEIntroViewController alloc] init];
@@ -71,9 +67,23 @@
     [self.navigationController pushViewController:introController animated:YES];
 }
 
-// 实现点击购买按钮后的事件
+#pragma mark - Other Delegate
+
+// 实现点击购买按钮后的事件：按钮变灰，文本变为“已购买”，需存储状态
 - (void)tableViewCell:(UITableViewCell *)tableViewCell clickPuchaseButton:(UIButton *)purchaseButton {
     
+}
+
+#pragma mark - Getter
+
+- (UITableView *)homeTableView {
+    if (!_homeTableView) {
+        _homeTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+        _homeTableView.backgroundColor = [UIColor whiteColor];
+        _homeTableView.dataSource = self;
+        _homeTableView.delegate = self;
+    }
+    return _homeTableView;
 }
 
 @end
