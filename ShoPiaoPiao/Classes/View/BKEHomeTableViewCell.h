@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, weak, readwrite) id<BKEHomeTableViewCellDelegate> delegate;  // weak?
 
+
 //- (void) layoutTableViewCell;
 
 @end

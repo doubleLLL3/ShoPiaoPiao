@@ -18,7 +18,11 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - ShoPiaoPiao (0.1.0)
+  - ShoPiaoPiao (0.1.0):
+    - AFNetworking
+    - Masonry
+    - SDWebImage
+    - YYModel
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -43,9 +47,9 @@ SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  ShoPiaoPiao: 161f789d2be1ac513a4aacc78b0dc2800ea33752
+  ShoPiaoPiao: a66ad558c185b28da9802435004d91adad16f404
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 55b54eef19b1eec5bf81135ba1f02a374cffc54b
+PODFILE CHECKSUM: 1c74b9e2a34e7488a2c54cf7547c6a5cefa27dae
 
 COCOAPODS: 1.10.1

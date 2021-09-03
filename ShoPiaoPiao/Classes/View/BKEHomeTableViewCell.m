@@ -6,6 +6,7 @@
 //
 
 #import "BKEHomeTableViewCell.h"
+#import <Masonry/Masonry.h>
 
 @interface BKEHomeTableViewCell ()
 
@@ -26,19 +27,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
         
-        [self.contentView addSubview:self.leftImageView];
+        [self setupView];
         
-        [self.contentView addSubview:self.titleLabel];
-        
-        [self.contentView addSubview:self.ratingLabel];
-        
-        [self.contentView addSubview:self.directorLabel];
-        
-        [self.contentView addSubview:self.actorLabel];
-        
-        [self.contentView addSubview:self.purchaseButton];
     }
     return self;
 }
@@ -49,12 +40,42 @@
     NSLog(@"Go To Purchase Page!");
 }
 
+#pragma mark - Private Method
+
+- (void)setupView {
+    
+    self.backgroundColor = [UIColor whiteColor];
+    
+    [self addSubview:self.leftImageView];
+    
+    [self addSubview:self.titleLabel];
+
+    [self addSubview:self.ratingLabel];
+
+    [self addSubview:self.directorLabel];
+
+    [self addSubview:self.actorLabel];
+
+    [self addSubview:self.purchaseButton];
+    
+    [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.contentView.frame.size.width / 20);
+        make.centerY.mas_equalTo(self);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.85);
+        make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
+    }];
+    
+    
+    
+    return ;
+}
+
 #pragma mark - Getter
 
 // ❗️修改为相对布局（Mansory）
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
-        _leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 70, 70)];
+        _leftImageView = [[UIImageView alloc] init];
         _leftImageView.backgroundColor = [UIColor orangeColor];
         _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     }

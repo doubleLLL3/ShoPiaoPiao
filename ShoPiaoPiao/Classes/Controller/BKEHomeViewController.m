@@ -45,6 +45,7 @@
     BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
     if (!cell) {
         cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"id"];
+        
         cell.delegate = self;
     }
     
@@ -57,7 +58,7 @@
 
 // 每个Cell的行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 150;
 }
 
 // 点击Cell后响应的View

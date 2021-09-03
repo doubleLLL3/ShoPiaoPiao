@@ -18,5 +18,19 @@
   "platforms": {
     "ios": "9.0"
   },
-  "source_files": "ShoPiaoPiao/Classes/**/*"
+  "source_files": "ShoPiaoPiao/Classes/**/*",
+  "dependencies": {
+    "Masonry": [
+
+    ],
+    "AFNetworking": [
+
+    ],
+    "SDWebImage": [
+
+    ],
+    "YYModel": [
+
+    ]
+  }
 }
