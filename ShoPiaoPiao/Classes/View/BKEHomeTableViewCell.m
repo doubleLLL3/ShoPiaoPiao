@@ -10,13 +10,7 @@
 
 @interface BKEHomeTableViewCell ()
 
-// 电影封面、标题、评分、导演、演员表、购票按钮
-@property(nonatomic, strong, readwrite) UIImageView *leftImageView;
-@property(nonatomic, strong, readwrite) UILabel *titleLabel;
-@property(nonatomic, strong, readwrite) UILabel *ratingLabel;
-@property(nonatomic, strong, readwrite) UILabel *directorLabel;
-@property(nonatomic, strong, readwrite) UILabel *actorLabel;
-@property(nonatomic, strong, readwrite) UIButton *purchaseButton;
+
 
 @end
 
@@ -34,7 +28,6 @@
     return self;
 }
 
-
 // ❓这个里面可以包含delegate的Click；捋一捋怎么用
 - (void)purchaseButtonClick {
     NSLog(@"Go To Purchase Page!");
@@ -45,34 +38,60 @@
 - (void)setupView {
     
     self.backgroundColor = [UIColor whiteColor];
-    
     [self addSubview:self.leftImageView];
-    
     [self addSubview:self.titleLabel];
-
     [self addSubview:self.ratingLabel];
-
     [self addSubview:self.directorLabel];
-
     [self addSubview:self.actorLabel];
-
     [self addSubview:self.purchaseButton];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.contentView.frame.size.width / 20);
+        make.left.mas_equalTo(self.frame.size.width / 20);
         make.centerY.mas_equalTo(self);
         make.height.mas_equalTo(self.mas_height).multipliedBy(0.85);
         make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
     }];
     
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(self.frame.size.width / 20);
+        make.top.mas_equalTo(self.leftImageView);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.2);
+        make.width.mas_equalTo(self.mas_width).dividedBy(2.5);
+    }];
     
+    [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.top.mas_equalTo(self.titleLabel.mas_bottom);
+        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+    }];
+    
+    [self.directorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.top.mas_equalTo(self.ratingLabel.mas_bottom);
+        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+    }];
+    
+    [self.actorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.top.mas_equalTo(self.directorLabel.mas_bottom);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.3);
+        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+    }];
+    
+    [self.purchaseButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-self.frame.size.width / 20);
+        make.centerY.mas_equalTo(self);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.2);
+        make.width.mas_equalTo(self.mas_width).multipliedBy(0.15);
+    }];
     
     return ;
 }
 
 #pragma mark - Getter
 
-// ❗️修改为相对布局（Mansory）
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
         _leftImageView = [[UIImageView alloc] init];
@@ -84,7 +103,7 @@
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 15, 200, 30)];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.backgroundColor = [UIColor redColor];
         _titleLabel.font = [UIFont systemFontOfSize:16];
         _titleLabel.textColor = [UIColor blackColor];
@@ -94,7 +113,7 @@
 
 - (UILabel *)ratingLabel {
     if (!_ratingLabel) {
-        _ratingLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 45, 100, 10)];
+        _ratingLabel = [[UILabel alloc] init];
         _ratingLabel.backgroundColor = [UIColor grayColor];
         _ratingLabel.font = [UIFont systemFontOfSize:12];
         _ratingLabel.textColor = [UIColor redColor];
@@ -104,7 +123,7 @@
 
 - (UILabel *)directorLabel {
     if (!_directorLabel) {
-        _directorLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 60, 100, 20)];
+        _directorLabel = [[UILabel alloc] init];
         _directorLabel.backgroundColor = [UIColor lightGrayColor];
         _directorLabel.font = [UIFont systemFontOfSize:12];
         _directorLabel.textColor = [UIColor redColor];
@@ -114,8 +133,8 @@
 
 - (UILabel *)actorLabel {
     if (!_actorLabel) {
-        _actorLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 85, 100, 20)];
-        _actorLabel.backgroundColor = [UIColor grayColor];
+        _actorLabel = [[UILabel alloc] init];
+        _actorLabel.backgroundColor = [UIColor yellowColor];
         _actorLabel.font = [UIFont systemFontOfSize:12];
         _actorLabel.textColor = [UIColor redColor];
     }
@@ -124,7 +143,7 @@
 
 - (UIButton *)purchaseButton {
     if (!_purchaseButton) {
-        _purchaseButton = [[UIButton alloc] initWithFrame:CGRectMake(330, 40, 50, 30)];
+        _purchaseButton = [[UIButton alloc] init];
         _purchaseButton.backgroundColor = [UIColor redColor];
         [_purchaseButton setTitle:@"购票" forState:UIControlStateNormal];
         [_purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];

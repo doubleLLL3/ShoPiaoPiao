@@ -6,6 +6,7 @@
 //
 
 #import "BKEInfoTableViewCell.h"
+#import <Masonry/Masonry.h>
 
 @interface BKEInfoTableViewCell ()
 
@@ -24,11 +25,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.leftImageView];
-        [self.contentView addSubview:self.titleLabel];
-        [self.contentView addSubview:self.typeLabel];
-        [self.contentView addSubview:self.showDateLabel];
+        [self setupView];
     }
     return self;
 }
@@ -39,12 +36,52 @@
     NSLog(@"Go To Purchase Page!");
 }
 
+#pragma mark - Private Method
+
+- (void)setupView {
+    
+    self.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.leftImageView];
+    [self addSubview:self.titleLabel];
+    [self addSubview:self.typeLabel];
+    [self addSubview:self.showDateLabel];
+    
+    [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.frame.size.width / 20);
+        make.centerY.mas_equalTo(self);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.85);
+        make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
+    }];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(self.frame.size.width / 20);
+        make.top.mas_equalTo(self.leftImageView);
+        make.height.mas_equalTo(self.mas_height).multipliedBy(0.2);
+        make.width.mas_equalTo(self.mas_width).dividedBy(2.5);
+    }];
+    
+    [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.top.mas_equalTo(self.titleLabel.mas_bottom);
+        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+    }];
+    
+    [self.showDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.top.mas_equalTo(self.typeLabel.mas_bottom);
+        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+    }];
+    
+    return ;
+}
+
 #pragma mark - Getter
 
-// ❗️修改为相对布局（Mansory）
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
-        _leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 70, 70)];
+        _leftImageView = [[UIImageView alloc] init];
         _leftImageView.backgroundColor = [UIColor orangeColor];
         _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
@@ -53,7 +90,7 @@
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 15, 200, 30)];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.backgroundColor = [UIColor redColor];
         _titleLabel.font = [UIFont systemFontOfSize:16];
         _titleLabel.textColor = [UIColor blackColor];
@@ -63,7 +100,7 @@
 
 - (UILabel *)typeLabel {
     if (!_typeLabel) {
-        _typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 45, 100, 10)];
+        _typeLabel = [[UILabel alloc] init];
         _typeLabel.backgroundColor = [UIColor grayColor];
         _typeLabel.font = [UIFont systemFontOfSize:12];
         _typeLabel.textColor = [UIColor redColor];
@@ -73,7 +110,7 @@
 
 - (UILabel *)showDateLabel {
     if (!_showDateLabel) {
-        _showDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 60, 100, 20)];
+        _showDateLabel = [[UILabel alloc] init];
         _showDateLabel.backgroundColor = [UIColor lightGrayColor];
         _showDateLabel.font = [UIFont systemFontOfSize:12];
         _showDateLabel.textColor = [UIColor redColor];

@@ -34,7 +34,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row % 3 == 0) {
+    if (indexPath.row == 0) {
         static NSString *id1 = @"CellInfo";
         // 去系统回收池中取对应id的Cell（只有某个Cell被移出屏幕后才会有，所以一开始需要创建很多个Cell）
         BKEInfoTableViewCell *infoCell = [tableView dequeueReusableCellWithIdentifier:id1];
@@ -44,7 +44,7 @@
         }
         return infoCell;
 
-    } else if (indexPath.row % 3 == 1) {
+    } else if (indexPath.row == 1) {
         static NSString *id2 = @"CellDetail";
         BKEDetailTableViewCell *detailCell = [tableView dequeueReusableCellWithIdentifier:id2];
         if (!detailCell) {
@@ -65,7 +65,7 @@
 
 // 每个Cell的行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 150;
 }
 
 #pragma mark - Getter

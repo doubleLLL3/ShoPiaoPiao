@@ -17,8 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BKEHomeTableViewCell : UITableViewCell
 
-@property(nonatomic, weak, readwrite) id<BKEHomeTableViewCellDelegate> delegate;  // weak?
+// 电影封面、标题、评分、导演、演员表、购票按钮
+@property(nonatomic, strong, readwrite) UIImageView *leftImageView;
+@property(nonatomic, strong, readwrite) UILabel *titleLabel;
+@property(nonatomic, strong, readwrite) UILabel *ratingLabel;
+@property(nonatomic, strong, readwrite) UILabel *directorLabel;
+@property(nonatomic, strong, readwrite) UILabel *actorLabel;
+@property(nonatomic, strong, readwrite) UIButton *purchaseButton;
 
+@property(nonatomic, weak, readwrite) id<BKEHomeTableViewCellDelegate> delegate;  // weak?
 
 //- (void) layoutTableViewCell;
 
