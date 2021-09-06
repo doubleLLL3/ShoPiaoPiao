@@ -46,45 +46,45 @@
     [self addSubview:self.purchaseButton];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.frame.size.width / 20);
+        make.left.mas_equalTo(10);
         make.centerY.mas_equalTo(self);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.85);
+        make.height.mas_equalTo(130);
         make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftImageView.mas_right).offset(self.frame.size.width / 20);
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(10);
         make.top.mas_equalTo(self.leftImageView);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.2);
-        make.width.mas_equalTo(self.mas_width).dividedBy(2.5);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(self).dividedBy(2.5);
     }];
     
     [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.titleLabel.mas_bottom);
-        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
-        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
     }];
     
     [self.directorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.ratingLabel.mas_bottom);
-        make.height.mas_equalTo(self.titleLabel.mas_height).multipliedBy(0.8);
-        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
     }];
     
     [self.actorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.titleLabel.mas_left);
+        make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.directorLabel.mas_bottom);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.3);
-        make.width.mas_equalTo(self.titleLabel.mas_width).multipliedBy(0.8);
+        make.height.mas_equalTo(self).multipliedBy(0.3);
+        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
     }];
     
     [self.purchaseButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-self.frame.size.width / 20);
+        make.right.mas_equalTo(-20);
         make.centerY.mas_equalTo(self);
-        make.height.mas_equalTo(self.mas_height).multipliedBy(0.2);
-        make.width.mas_equalTo(self.mas_width).multipliedBy(0.15);
+        make.height.mas_equalTo(self).multipliedBy(0.2);
+        make.width.mas_equalTo(self).multipliedBy(0.15);
     }];
     
     return ;

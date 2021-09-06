@@ -96,6 +96,8 @@
 		565FFF620CE785D5F264F0C35121D578 /* SDImageLoadersManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A2D255D8C179FE982706DF7B70057D6 /* SDImageLoadersManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56E7CE6F3DFD036AB75EAF25C3AFDF83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360A8E27C412C42E587B13BE61594E51 /* Foundation.framework */; };
 		57245D94B1C1AAE8E16EB4D734FEFDEA /* BKEPurchaseTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A17155BBFC28E782829F24F4D978A80 /* BKEPurchaseTableViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57C2004326E6044200D1E5A4 /* BKEMovieListLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 57C2004126E6044200D1E5A4 /* BKEMovieListLoader.h */; };
+		57C2004426E6044200D1E5A4 /* BKEMovieListLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C2004226E6044200D1E5A4 /* BKEMovieListLoader.m */; };
 		58AF805046CFD9986EFEAACCBA61F9BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360A8E27C412C42E587B13BE61594E51 /* Foundation.framework */; };
 		5CA2AC72A71CEF79A07FAAA283BE8A52 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68395FB7A755C4CF016363379E0EA22E /* ImageIO.framework */; };
 		5D5AB502D85BF8E27246A5964F6B3E9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CB7E6D4F2C1A2865102AD09E853339F /* UIKit.framework */; };
@@ -426,6 +428,8 @@
 		571DBE3E717B385B22593D368F53E7A1 /* SDImageLoadersManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageLoadersManager.m; path = SDWebImage/Core/SDImageLoadersManager.m; sourceTree = "<group>"; };
 		577E584D82182CE0880638D8688B911D /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		57946C8E48E4F18B38FF42D82FFE88A5 /* SDInternalMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDInternalMacros.h; path = SDWebImage/Private/SDInternalMacros.h; sourceTree = "<group>"; };
+		57C2004126E6044200D1E5A4 /* BKEMovieListLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BKEMovieListLoader.h; sourceTree = "<group>"; };
+		57C2004226E6044200D1E5A4 /* BKEMovieListLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BKEMovieListLoader.m; sourceTree = "<group>"; };
 		596282AACE8BA1623DE7C27D76D1F4C5 /* MASViewAttribute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewAttribute.h; path = Masonry/MASViewAttribute.h; sourceTree = "<group>"; };
 		5BE03628ACEFFA1A9B351D021E57AF62 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageContentType.m"; path = "SDWebImage/Core/NSData+ImageContentType.m"; sourceTree = "<group>"; };
 		5D367042E45EB7A265EE420155E73678 /* YYModel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "YYModel-dummy.m"; sourceTree = "<group>"; };
@@ -930,6 +934,16 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		57C2004026E602E900D1E5A4 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				57C2004126E6044200D1E5A4 /* BKEMovieListLoader.h */,
+				57C2004226E6044200D1E5A4 /* BKEMovieListLoader.m */,
+			);
+			name = Loader;
+			path = ShoPiaoPiao/Classes/Loader;
+			sourceTree = "<group>";
+		};
 		5812B0747CDB7316A15B8753CBC6F12F /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,6 +1166,7 @@
 		D8674C300AB71835FE2395D053C0F32A /* ShoPiaoPiao */ = {
 			isa = PBXGroup;
 			children = (
+				57C2004026E602E900D1E5A4 /* Loader */,
 				8E37F3ABAC6A8218F54E3A6164E915C1 /* Controller */,
 				03E00772A71D37226916BCF3BDE60F79 /* Pod */,
 				F5535AD13956D0A7263EB4384F07BCE0 /* Support Files */,
@@ -1261,6 +1276,7 @@
 				11B25C5157E6D2DB14AB303BCA851F6C /* BKEIntroViewController.h in Headers */,
 				57245D94B1C1AAE8E16EB4D734FEFDEA /* BKEPurchaseTableViewCell.h in Headers */,
 				F836340B38427B19953576282AB8257E /* ShoPiaoPiao-umbrella.h in Headers */,
+				57C2004326E6044200D1E5A4 /* BKEMovieListLoader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1746,6 +1762,7 @@
 				9DDB18F59BA7181E9CD0249EFF84B05B /* BKEHomeTableViewCell.m in Sources */,
 				9C16121CD0956B67E9492874A9AD3468 /* BKEHomeViewController.m in Sources */,
 				2312529E79AC86EC0D482F1E8FDF852F /* BKEInfoTableViewCell.m in Sources */,
+				57C2004426E6044200D1E5A4 /* BKEMovieListLoader.m in Sources */,
 				4C2A12F35EC008A89FE94A27B5A73EFB /* BKEIntroViewController.m in Sources */,
 				FE6EBD50CFB903F3E590F23B50EA4421 /* BKEPurchaseTableViewCell.m in Sources */,
 				9AD57FEC8C5B77FED92859A8D6D17882 /* ShoPiaoPiao-dummy.m in Sources */,

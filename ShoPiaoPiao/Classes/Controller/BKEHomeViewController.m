@@ -8,10 +8,14 @@
 #import "BKEHomeViewController.h"
 #import "BKEHomeTableViewCell.h"
 #import "BKEIntroViewController.h"
+#import "BKEMovieListLoader.h"
+
+static NSString *const kCellId = @"CellInfo";
 
 @interface BKEHomeViewController () <UITableViewDataSource, UITableViewDelegate, BKEHomeTableViewCellDelegate>
 
 @property(nonatomic, strong, readwrite) UITableView *homeTableView;
+@property(nonatomic, strong, readwrite) BKEMovieListLoader *movielistLoader;
 
 @end
 
@@ -30,6 +34,8 @@
 
     [self.view addSubview:self.homeTableView];
     
+    
+    
     return ;
 }
 
@@ -42,9 +48,9 @@
 
 // 每个位置的Cell内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
+    BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
-        cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"id"];
+        cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellId];
         
         cell.delegate = self;
     }
