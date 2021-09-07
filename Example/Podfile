@@ -9,6 +9,7 @@ target 'ShoPiaoPiao_Example' do
   pod 'AFNetworking'
   pod 'SDWebImage'
   pod 'YYModel'
+  pod 'MJRefresh'
 
   target 'ShoPiaoPiao_Tests' do
     inherit! :search_paths

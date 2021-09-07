@@ -9,13 +9,17 @@
 #import "BKEHomeTableViewCell.h"
 #import "BKEIntroViewController.h"
 #import "BKEMovieListLoader.h"
+#import "BKEMovieModel.h"
+
+#import <AFNetworking/AFNetworking.h>
+#include <YYModel/YYModel.h>
 
 static NSString *const kCellId = @"CellInfo";
 
 @interface BKEHomeViewController () <UITableViewDataSource, UITableViewDelegate, BKEHomeTableViewCellDelegate>
 
 @property(nonatomic, strong, readwrite) UITableView *homeTableView;
-@property(nonatomic, strong, readwrite) BKEMovieListLoader *movielistLoader;
+@property(nonatomic, strong, readwrite) NSMutableArray *movieList;
 
 @end
 
@@ -34,6 +38,22 @@ static NSString *const kCellId = @"CellInfo";
 
     [self.view addSubview:self.homeTableView];
     
+    // 拉取网络json数据
+    [[AFHTTPSessionManager manager] GET:@"http://localhost:8888/data1.json" parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        
+        for (int i = 0; i < ((NSArray *)responseObject[@"data"]).count; ++i) {
+            BKEMovieModel *movieData = [BKEMovieModel yy_modelWithJSON: responseObject[@"data"][i]];  // ❓是否需要进入"data"
+            [self.movieList addObject:movieData];
+        }
+        
+        [self.homeTableView reloadData];  // ❗️要关注线程，如果不是主线程，先切换线程
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"0");
+    }];
     
     
     return ;
@@ -43,7 +63,7 @@ static NSString *const kCellId = @"CellInfo";
 
 // 一次缓冲的Cell数量
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return self.movieList.count;
 }
 
 // 每个位置的Cell内容
@@ -51,12 +71,9 @@ static NSString *const kCellId = @"CellInfo";
     BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
         cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellId];
-        
+        [cell setMovieData:self.movieList[indexPath.row]];
         cell.delegate = self;
     }
-    
-//    [cell ];
-    
     return cell;
 }
 
@@ -91,6 +108,13 @@ static NSString *const kCellId = @"CellInfo";
         _homeTableView.delegate = self;
     }
     return _homeTableView;
+}
+
+- (NSMutableArray *)movieList {
+    if (!_movieList) {
+        _movieList = @[].mutableCopy;
+    }
+    return _movieList;
 }
 
 @end

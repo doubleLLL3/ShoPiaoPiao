@@ -65,7 +65,6 @@
         make.width.mas_equalTo(self);                      // 设置width撑开
         make.right.mas_equalTo(self.scrollContainerView);  // 最后需要和父视图连通；以一个整体来考虑
     }];
-    
     return ;
 }
 

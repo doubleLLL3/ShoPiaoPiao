@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
   - Masonry (1.1.0)
+  - MJRefresh (3.7.2)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -28,6 +29,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - Masonry
+  - MJRefresh
   - SDWebImage
   - ShoPiaoPiao (from `../`)
   - YYModel
@@ -36,6 +38,7 @@ SPEC REPOS:
   trunk:
     - AFNetworking
     - Masonry
+    - MJRefresh
     - SDWebImage
     - YYModel
 
@@ -46,10 +49,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   ShoPiaoPiao: a66ad558c185b28da9802435004d91adad16f404
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 4cc73c72241c9df3160fba6a53d4b9ea7eef1b71
+PODFILE CHECKSUM: a26485dea8f1e9f4146efd744a17dbeba1c43e6b
 
 COCOAPODS: 1.10.1

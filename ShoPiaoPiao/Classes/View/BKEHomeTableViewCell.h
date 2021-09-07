@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKEMovieModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readwrite) UIButton *purchaseButton;
 
 @property(nonatomic, weak, readwrite) id<BKEHomeTableViewCellDelegate> delegate;  // weak?
+
+- (void) setMovieData:(BKEMovieModel *)movieData;
 
 //- (void) layoutTableViewCell;
 

@@ -7,6 +7,7 @@
 
 #import "BKEHomeTableViewCell.h"
 #import <Masonry/Masonry.h>
+#import <SDWebImage/SDWebImage.h>
 
 @interface BKEHomeTableViewCell ()
 
@@ -31,6 +32,14 @@
 // ❓这个里面可以包含delegate的Click；捋一捋怎么用
 - (void)purchaseButtonClick {
     NSLog(@"Go To Purchase Page!");
+}
+
+- (void) setMovieData:(BKEMovieModel *)movieData {
+    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
+    [self.titleLabel setText:movieData.name];
+    [self.ratingLabel setText:movieData.rating];
+    [self.directorLabel setText:movieData.director];
+    [self.actorLabel setText:movieData.starring];
 }
 
 #pragma mark - Private Method
