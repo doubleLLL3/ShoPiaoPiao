@@ -10,7 +10,7 @@
 
 @interface BKEPurchaseTableViewCell ()
 
-@property(nonatomic, strong, readwrite) UIButton *purchaseButton;
+@property(nonatomic, strong) UIButton *purchaseButton;
 
 @end
 

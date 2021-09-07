@@ -37,7 +37,12 @@
 - (void) setMovieData:(BKEMovieModel *)movieData {
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
     [self.titleLabel setText:movieData.name];
-    [self.ratingLabel setText:movieData.rating];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    formatter.maximumIntegerDigits = 1;
+    [self.ratingLabel setText:[formatter stringFromNumber:movieData.rating]];
+    
     [self.directorLabel setText:movieData.director];
     [self.actorLabel setText:movieData.starring];
 }
@@ -65,7 +70,7 @@
         make.left.mas_equalTo(self.leftImageView.mas_right).offset(10);
         make.top.mas_equalTo(self.leftImageView);
         make.height.mas_equalTo(30);
-        make.width.mas_equalTo(self).dividedBy(2.5);
+        make.width.mas_equalTo(self).dividedBy(2);
     }];
     
     [self.ratingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -78,15 +83,15 @@
     [self.directorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.ratingLabel.mas_bottom);
-        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.5);
         make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
     }];
     
     [self.actorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.directorLabel.mas_bottom);
-        make.height.mas_equalTo(self).multipliedBy(0.3);
-        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.height.mas_equalTo(self).multipliedBy(0.4);
+        make.width.mas_equalTo(self.titleLabel).multipliedBy(1);
     }];
     
     [self.purchaseButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,7 +109,6 @@
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
         _leftImageView = [[UIImageView alloc] init];
-        _leftImageView.backgroundColor = [UIColor orangeColor];
         _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _leftImageView;
@@ -113,9 +117,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.backgroundColor = [UIColor redColor];
         _titleLabel.font = [UIFont systemFontOfSize:16];
-        _titleLabel.textColor = [UIColor blackColor];
     }
     return _titleLabel;
 }
@@ -123,7 +125,6 @@
 - (UILabel *)ratingLabel {
     if (!_ratingLabel) {
         _ratingLabel = [[UILabel alloc] init];
-        _ratingLabel.backgroundColor = [UIColor grayColor];
         _ratingLabel.font = [UIFont systemFontOfSize:12];
         _ratingLabel.textColor = [UIColor redColor];
     }
@@ -133,9 +134,7 @@
 - (UILabel *)directorLabel {
     if (!_directorLabel) {
         _directorLabel = [[UILabel alloc] init];
-        _directorLabel.backgroundColor = [UIColor lightGrayColor];
         _directorLabel.font = [UIFont systemFontOfSize:12];
-        _directorLabel.textColor = [UIColor redColor];
     }
     return _directorLabel;
 }
@@ -143,9 +142,9 @@
 - (UILabel *)actorLabel {
     if (!_actorLabel) {
         _actorLabel = [[UILabel alloc] init];
-        _actorLabel.backgroundColor = [UIColor yellowColor];
-        _actorLabel.font = [UIFont systemFontOfSize:12];
-        _actorLabel.textColor = [UIColor redColor];
+        _actorLabel.font = [UIFont systemFontOfSize:10];
+        _actorLabel.textColor = [UIColor grayColor];
+        _actorLabel.numberOfLines = 0;
     }
     return _actorLabel;
 }

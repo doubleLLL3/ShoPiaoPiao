@@ -22,6 +22,7 @@ PODS:
   - ShoPiaoPiao (0.1.0):
     - AFNetworking
     - Masonry
+    - MJRefresh
     - SDWebImage
     - YYModel
   - YYModel (1.0.4)
@@ -51,7 +52,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  ShoPiaoPiao: a66ad558c185b28da9802435004d91adad16f404
+  ShoPiaoPiao: 4c290ec1bd4390f2a8aa476c609e798fcc109d0f
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
 PODFILE CHECKSUM: a26485dea8f1e9f4146efd744a17dbeba1c43e6b

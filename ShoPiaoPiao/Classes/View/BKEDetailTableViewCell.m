@@ -10,11 +10,11 @@
 
 @interface BKEDetailTableViewCell ()
 
-@property(nonatomic, strong, readwrite) UIScrollView *detailView;
-@property(nonatomic, strong, readwrite) UIView *scrollContainerView;
-@property(nonatomic, strong, readwrite) UIView *summaryTextView;
-@property(nonatomic, strong, readwrite) UIView *commentTextView;
-@property(nonatomic, strong, readwrite) UIView *moreTextView;
+@property(nonatomic, strong) UIScrollView *detailView;
+@property(nonatomic, strong) UIView *scrollContainerView;
+@property(nonatomic, strong) UIView *summaryTextView;
+@property(nonatomic, strong) UIView *commentTextView;
+@property(nonatomic, strong) UIView *moreTextView;
 
 @end
 

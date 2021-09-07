@@ -19,14 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BKEHomeTableViewCell : UITableViewCell
 
 // 电影封面、标题、评分、导演、演员表、购票按钮
-@property(nonatomic, strong, readwrite) UIImageView *leftImageView;
-@property(nonatomic, strong, readwrite) UILabel *titleLabel;
-@property(nonatomic, strong, readwrite) UILabel *ratingLabel;
-@property(nonatomic, strong, readwrite) UILabel *directorLabel;
-@property(nonatomic, strong, readwrite) UILabel *actorLabel;
-@property(nonatomic, strong, readwrite) UIButton *purchaseButton;
+@property(nonatomic, strong) UIImageView *leftImageView;
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *ratingLabel;
+@property(nonatomic, strong) UILabel *directorLabel;
+@property(nonatomic, strong) UILabel *actorLabel;
+@property(nonatomic, strong) UIButton *purchaseButton;
 
-@property(nonatomic, weak, readwrite) id<BKEHomeTableViewCellDelegate> delegate;  // weak?
+@property(nonatomic, weak) id<BKEHomeTableViewCellDelegate> delegate;
 
 - (void) setMovieData:(BKEMovieModel *)movieData;
 

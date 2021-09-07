@@ -32,9 +32,9 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'ShoPiaoPiao/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'ShoPiaoPiao' => ['ShoPiaoPiao/Assets/*.png']
-  # }
+    s.resource_bundles = {
+     'ShoPiaoPiao' => ['ShoPiaoPiao/Assets/*']
+    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
@@ -43,5 +43,6 @@ TODO: Add long description of the pod here.
    s.dependency 'AFNetworking'
    s.dependency 'SDWebImage'
    s.dependency 'YYModel'
+   s.dependency 'MJRefresh'
    
 end

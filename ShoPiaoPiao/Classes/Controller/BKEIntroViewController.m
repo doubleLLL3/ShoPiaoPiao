@@ -16,7 +16,7 @@ static NSString *const kCellPurchase = @"CellPurchase";
 
 @interface BKEIntroViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, strong, readwrite) UITableView *introTableView;
+@property(nonatomic, strong) UITableView *introTableView;
 
 @end
 

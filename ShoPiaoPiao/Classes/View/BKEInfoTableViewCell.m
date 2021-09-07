@@ -11,10 +11,10 @@
 @interface BKEInfoTableViewCell ()
 
 // 电影封面、标题、评分、导演、演员表、购票按钮
-@property(nonatomic, strong, readwrite) UIImageView *leftImageView;
-@property(nonatomic, strong, readwrite) UILabel *titleLabel;
-@property(nonatomic, strong, readwrite) UILabel *typeLabel;
-@property(nonatomic, strong, readwrite) UILabel *showDateLabel;
+@property(nonatomic, strong) UIImageView *leftImageView;
+@property(nonatomic, strong) UILabel *titleLabel;
+@property(nonatomic, strong) UILabel *typeLabel;
+@property(nonatomic, strong) UILabel *showDateLabel;
 
 @end
 
