@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BKEMovieModel : NSObject
 
 @property(nonatomic, copy) NSString *name;
-@property(nonatomic, assign) NSNumber *rating;
+@property(nonatomic, strong) NSNumber *rating;
+//@property(nonatomic, copy) NSString *rating;
 @property(nonatomic, copy) NSString *director;
 @property(nonatomic, copy) NSString *starring;
 @property(nonatomic, copy) NSString *imageURL;

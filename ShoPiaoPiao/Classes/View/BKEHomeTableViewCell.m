@@ -38,11 +38,9 @@
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
     [self.titleLabel setText:movieData.name];
     
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    formatter.maximumIntegerDigits = 1;
-    [self.ratingLabel setText:[formatter stringFromNumber:movieData.rating]];
-    
+    NSString *sRating = [NSString stringWithFormat:@"%.1f", movieData.rating.doubleValue];
+    [self.ratingLabel setText:sRating];
+
     [self.directorLabel setText:movieData.director];
     [self.actorLabel setText:movieData.starring];
 }
@@ -153,11 +151,12 @@
     if (!_purchaseButton) {
         _purchaseButton = [[UIButton alloc] init];
         _purchaseButton.backgroundColor = [UIColor redColor];
-        [_purchaseButton setTitle:@"购票" forState:UIControlStateNormal];
-        [_purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        
         _purchaseButton.layer.cornerRadius = 10;
         _purchaseButton.layer.masksToBounds = YES;
+        _purchaseButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [_purchaseButton setTitle:@"购票" forState:UIControlStateNormal];
+        [_purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _purchaseButton;
 }
