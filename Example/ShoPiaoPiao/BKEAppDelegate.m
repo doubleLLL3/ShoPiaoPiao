@@ -36,6 +36,7 @@
 - (BKEHomeViewController *)homeViewController {
     if (!_homeViewController) {
         _homeViewController = [[BKEHomeViewController alloc] init];
+        _homeViewController.title = @"推荐电影";
     }
     return _homeViewController;
 }

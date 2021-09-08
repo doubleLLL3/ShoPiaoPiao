@@ -13,6 +13,7 @@
 #import "BKEHomeViewController.h"
 #import "BKEIntroViewController.h"
 #import "BKEMovieListLoader.h"
+#import "BKEMovieDetailModel.h"
 #import "BKEMovieModel.h"
 #import "BKEDetailTableViewCell.h"
 #import "BKEHomeTableViewCell.h"

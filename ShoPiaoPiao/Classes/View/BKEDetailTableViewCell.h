@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKEMovieDetailModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BKEDetailTableViewCell : UITableViewCell
+
+- (void) setMovieDetail:(BKEMovieDetailModel *)movieDetail;
 
 @end
 

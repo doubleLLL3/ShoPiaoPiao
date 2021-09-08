@@ -30,8 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) setMovieData:(BKEMovieModel *)movieData;
 
-//- (void) layoutTableViewCell;
-
 @end
 
 NS_ASSUME_NONNULL_END

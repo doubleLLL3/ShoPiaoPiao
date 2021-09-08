@@ -7,14 +7,16 @@
 
 #import "BKEInfoTableViewCell.h"
 #import <Masonry/Masonry.h>
+#import <SDWebImage/SDWebImage.h>
 
 @interface BKEInfoTableViewCell ()
 
 // 电影封面、标题、评分、导演、演员表、购票按钮
 @property(nonatomic, strong) UIImageView *leftImageView;
 @property(nonatomic, strong) UILabel *titleLabel;
-@property(nonatomic, strong) UILabel *typeLabel;
-@property(nonatomic, strong) UILabel *showDateLabel;
+@property(nonatomic, strong) UILabel *subtitleLabel;
+@property(nonatomic, strong) UILabel *durationsLabel;
+@property(nonatomic, strong) UILabel *akaLabel;
 
 @end
 
@@ -30,10 +32,24 @@
     return self;
 }
 
-
-// ❓这个里面可以包含delegate的Click；捋一捋怎么用
-- (void)purchaseButtonClick {
-    NSLog(@"Go To Purchase Page!");
+- (void) setMovieData:(BKEMovieModel *)movieData setMovieDetail:(BKEMovieDetailModel *)movieDetail {
+    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
+    [self.titleLabel setText:movieData.name];
+    
+    [self.subtitleLabel setText:movieDetail.card_subtitle];
+    NSString *durations = @"片长：";
+    for (NSString *duration in movieDetail.durations) {
+        NSString *durationWithSpace = [NSString stringWithFormat:@"%@ ", duration];  // 用空格隔开
+        durations = [durations stringByAppendingString:durationWithSpace];
+    }
+    [self.durationsLabel setText:durations];
+    
+    NSString *akas = @"又名：";
+    for (NSString *aka in movieDetail.aka) {
+        NSString *akaWithSpace = [NSString stringWithFormat:@"%@ ", aka];            // 用空格隔开
+        akas = [akas stringByAppendingString:akaWithSpace];
+    }
+    [self.akaLabel setText:akas];
 }
 
 #pragma mark - Private Method
@@ -43,35 +59,42 @@
     self.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.leftImageView];
     [self addSubview:self.titleLabel];
-    [self addSubview:self.typeLabel];
-    [self addSubview:self.showDateLabel];
+    [self addSubview:self.subtitleLabel];
+    [self addSubview:self.durationsLabel];
+    [self addSubview:self.akaLabel];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.centerY.mas_equalTo(self);
-        make.height.mas_equalTo(self).multipliedBy(0.85);
+        make.height.mas_equalTo(180);
         make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftImageView.mas_right).offset(10);
-        make.top.mas_equalTo(self.leftImageView);
-        make.height.mas_equalTo(self).multipliedBy(0.2);
-        make.width.mas_equalTo(self).dividedBy(2.5);
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(20);
+        make.top.mas_equalTo(self.leftImageView).offset(10);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(self).dividedBy(1.8);
     }];
     
-    [self.typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.titleLabel.mas_bottom);
-        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.8);
-        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.height.mas_equalTo(70);
+        make.width.mas_equalTo(self.titleLabel);
     }];
     
-    [self.showDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.durationsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
-        make.top.mas_equalTo(self.typeLabel.mas_bottom);
-        make.height.mas_equalTo(self.titleLabel).multipliedBy(0.8);
-        make.width.mas_equalTo(self.titleLabel).multipliedBy(0.8);
+        make.top.mas_equalTo(self.subtitleLabel.mas_bottom);
+        make.width.mas_equalTo(self.titleLabel);
+    }];
+    
+    [self.akaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.titleLabel);
+        make.top.mas_equalTo(self.durationsLabel.mas_bottom);
+        make.bottom.mas_equalTo(self.leftImageView);
+        make.width.mas_equalTo(self.titleLabel);
     }];
     
     return ;
@@ -82,7 +105,6 @@
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
         _leftImageView = [[UIImageView alloc] init];
-        _leftImageView.backgroundColor = [UIColor orangeColor];
         _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _leftImageView;
@@ -91,31 +113,39 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.backgroundColor = [UIColor redColor];
         _titleLabel.font = [UIFont systemFontOfSize:16];
-        _titleLabel.textColor = [UIColor blackColor];
     }
     return _titleLabel;
 }
 
-- (UILabel *)typeLabel {
-    if (!_typeLabel) {
-        _typeLabel = [[UILabel alloc] init];
-        _typeLabel.backgroundColor = [UIColor grayColor];
-        _typeLabel.font = [UIFont systemFontOfSize:12];
-        _typeLabel.textColor = [UIColor redColor];
+- (UILabel *)subtitleLabel {
+    if (!_subtitleLabel) {
+        _subtitleLabel = [[UILabel alloc] init];
+        _subtitleLabel.font = [UIFont systemFontOfSize:12];
+        _subtitleLabel.textColor = [UIColor grayColor];
+        _subtitleLabel.numberOfLines = 0;
     }
-    return _typeLabel;
+    return _subtitleLabel;
 }
 
-- (UILabel *)showDateLabel {
-    if (!_showDateLabel) {
-        _showDateLabel = [[UILabel alloc] init];
-        _showDateLabel.backgroundColor = [UIColor lightGrayColor];
-        _showDateLabel.font = [UIFont systemFontOfSize:12];
-        _showDateLabel.textColor = [UIColor redColor];
+- (UILabel *)durationsLabel {
+    if (!_durationsLabel) {
+        _durationsLabel = [[UILabel alloc] init];
+        _durationsLabel.font = [UIFont systemFontOfSize:12];
+        _durationsLabel.textColor = [UIColor grayColor];
+        _durationsLabel.numberOfLines = 0;
     }
-    return _showDateLabel;
+    return _durationsLabel;
+}
+
+- (UILabel *)akaLabel {
+    if (!_akaLabel) {
+        _akaLabel = [[UILabel alloc] init];
+        _akaLabel.font = [UIFont systemFontOfSize:12];
+        _akaLabel.textColor = [UIColor grayColor];
+        _akaLabel.numberOfLines = 0;
+    }
+    return _akaLabel;
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "BKEIntroViewController.h"
 #import "BKEMovieListLoader.h"
 #import "BKEMovieModel.h"
+#import "BKEMovieDetailModel.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
@@ -22,9 +23,13 @@ static NSString *const kCellId = @"CellInfo";
 
 @property(nonatomic, strong) UITableView *homeTableView;
 @property(nonatomic, strong) NSMutableArray *movieList;
+@property(nonatomic, strong) BKEMovieModel *movieData;
+@property(nonatomic, strong) BKEMovieDetailModel *movieDetail;
 @property(nonatomic, strong) MJRefreshNormalHeader *dropDownHeader;
 @property(nonatomic, strong) MJRefreshBackNormalFooter *pullFooter;
 @property(nonatomic, assign) NSInteger movieListIndex;
+@property(nonatomic, strong) BKEIntroViewController *introViewController;
+
 
 @end
 
@@ -34,7 +39,6 @@ static NSString *const kCellId = @"CellInfo";
 
 - (instancetype)init {
     self = [super init];
-    //
     return self;
 }
 
@@ -51,6 +55,9 @@ static NSString *const kCellId = @"CellInfo";
     // 上拉加载更多
     self.homeTableView.mj_footer = self.pullFooter;
 
+    // 先加载一次数据
+    [self loadMovieList];
+    
     return ;
 }
 
@@ -66,10 +73,13 @@ static NSString *const kCellId = @"CellInfo";
     BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
         cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellId];
-//        [cell setMovieData:self.movieList[indexPath.row]];
-        cell.delegate = self;
     }
     [cell setMovieData:self.movieList[indexPath.row]];
+
+    cell.purchaseButton.backgroundColor = [UIColor redColor];
+    [cell.purchaseButton setEnabled:YES];
+
+    cell.delegate = self;
     return cell;
 }
 
@@ -80,18 +90,24 @@ static NSString *const kCellId = @"CellInfo";
     return 150;
 }
 
-// 点击Cell后响应的View
+// 点击Cell后进入详细信息页
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BKEIntroViewController *introController = [[BKEIntroViewController alloc] init];
-    introController.title = [NSString stringWithFormat:@"%@", @(indexPath.row)];
-    [self.navigationController pushViewController:introController animated:YES];
+    self.introViewController = [[BKEIntroViewController alloc] init];
+    self.introViewController.title = @"电影详情";
+    
+    self.movieData = self.movieList[indexPath.row];
+    [self loadMovieDetail:self.movieData.movieId];  // ❓添加：如果上次查询的就是这个moviewId，就不请求
+    
+    [self.navigationController pushViewController:self.introViewController animated:YES];
 }
 
 #pragma mark - Other Delegate
 
-// 实现点击购买按钮后的事件：按钮变灰，文本变为“已购买”，需存储状态
+// 实现点击购买按钮后的事件：按钮变灰，文本变为“已购买”
 - (void)tableViewCell:(UITableViewCell *)tableViewCell clickPuchaseButton:(UIButton *)purchaseButton {
-    
+    purchaseButton.backgroundColor = [UIColor grayColor];
+    [purchaseButton setEnabled:NO];
+    return ;
 }
 
 #pragma mark - Private Method
@@ -105,7 +121,7 @@ static NSString *const kCellId = @"CellInfo";
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-        [self.movieList removeAllObjects]; // ❗️在这里需要保留购票状态
+        [self.movieList removeAllObjects];
         self.movieListIndex = 1;
         
         NSArray *movieArray = responseObject[@"data"];
@@ -151,7 +167,25 @@ static NSString *const kCellId = @"CellInfo";
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error!");
     }];
+}
+
+- (void)loadMovieDetail:(NSString *)movieId {
+    // 从URL GET json数据
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
+    // ❗️weak解决循环引用
     
+    [manager GET:[NSString stringWithFormat:@"https://douban.8610000.xyz/data/%@.json", movieId] parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        self.movieDetail = [BKEMovieDetailModel yy_modelWithJSON: responseObject];
+        
+        [self.introViewController setupMovieData:self.movieData setupMovieDetail:self.movieDetail];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error!");
+    }];
 }
 
 #pragma mark - Getter

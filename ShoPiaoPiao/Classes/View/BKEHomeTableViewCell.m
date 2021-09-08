@@ -22,16 +22,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         [self setupView];
-        
     }
     return self;
-}
-
-// ❓这个里面可以包含delegate的Click；捋一捋怎么用
-- (void)purchaseButtonClick {
-    NSLog(@"Go To Purchase Page!");
 }
 
 - (void) setMovieData:(BKEMovieModel *)movieData {
@@ -55,7 +48,7 @@
     [self addSubview:self.ratingLabel];
     [self addSubview:self.directorLabel];
     [self addSubview:self.actorLabel];
-    [self addSubview:self.purchaseButton];
+    [self.contentView addSubview:self.purchaseButton];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
@@ -100,6 +93,13 @@
     }];
     
     return ;
+}
+
+// 点击购票按钮 ❓这个里面可以包含delegate的Click；捋一捋怎么用
+- (void)purchaseButtonClick {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tableViewCell:clickPuchaseButton:)]) {
+        [self.delegate tableViewCell:self clickPuchaseButton:self.purchaseButton];  // 暴露给使用者❓
+    }
 }
 
 #pragma mark - Getter
@@ -156,6 +156,8 @@
         _purchaseButton.titleLabel.font = [UIFont systemFontOfSize:14];
         
         [_purchaseButton setTitle:@"购票" forState:UIControlStateNormal];
+        [_purchaseButton setTitle:@"已购票" forState:UIControlStateDisabled];
+        
         [_purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _purchaseButton;

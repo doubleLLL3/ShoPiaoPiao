@@ -13,10 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, strong) NSNumber *rating;
-//@property(nonatomic, copy) NSString *rating;
 @property(nonatomic, copy) NSString *director;
 @property(nonatomic, copy) NSString *starring;
 @property(nonatomic, copy) NSString *imageURL;
+@property(nonatomic, copy) NSString *movieId;
 
 @end
 
