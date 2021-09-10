@@ -32,9 +32,9 @@
     return self;
 }
 
-- (void) setMovieData:(BKEMovieModel *)movieData setMovieDetail:(BKEMovieDetailModel *)movieDetail {
-    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
-    [self.titleLabel setText:movieData.name];
+- (void) updateMovieBasic:(BKEMovieBasicModel *)movieBasic movieDetail:(BKEMovieDetailModel *)movieDetail {
+    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieBasic.imageURL]];
+    [self.titleLabel setText:movieBasic.name];
     
     [self.subtitleLabel setText:movieDetail.card_subtitle];
     NSString *durations = @"片长：";
@@ -57,6 +57,7 @@
 - (void)setupView {
     
     self.backgroundColor = [UIColor whiteColor];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;  // 选中Cell不变色
     [self addSubview:self.leftImageView];
     [self addSubview:self.titleLabel];
     [self addSubview:self.subtitleLabel];
@@ -80,13 +81,14 @@
     [self.subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.titleLabel.mas_bottom);
-        make.height.mas_equalTo(70);
+        make.height.mas_equalTo(60);
         make.width.mas_equalTo(self.titleLabel);
     }];
     
     [self.durationsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.subtitleLabel.mas_bottom);
+        make.bottom.mas_equalTo(self.akaLabel.mas_top);
         make.width.mas_equalTo(self.titleLabel);
     }];
     
@@ -94,6 +96,7 @@
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.durationsLabel.mas_bottom);
         make.bottom.mas_equalTo(self.leftImageView);
+        make.height.mas_equalTo(30);
         make.width.mas_equalTo(self.titleLabel);
     }];
     

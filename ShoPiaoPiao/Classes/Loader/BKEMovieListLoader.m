@@ -10,7 +10,7 @@
 
 @implementation BKEMovieListLoader
 
-- (void)loadMovieListData {
+- (void)requestMovieListData {
     [[AFHTTPSessionManager manager] GET:@"http://0.0.0.0:8888/data1.json" parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

@@ -27,15 +27,15 @@
     return self;
 }
 
-- (void) setMovieData:(BKEMovieModel *)movieData {
-    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieData.imageURL]];
-    [self.titleLabel setText:movieData.name];
+- (void) updateMovieBasic:(BKEMovieBasicModel *)movieBasic {
+    [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieBasic.imageURL]];
+    [self.titleLabel setText:movieBasic.name];
     
-    NSString *sRating = [NSString stringWithFormat:@"%.1f", movieData.rating.doubleValue];
+    NSString *sRating = [NSString stringWithFormat:@"%.1f", movieBasic.rating.doubleValue];
     [self.ratingLabel setText:sRating];
 
-    [self.directorLabel setText:movieData.director];
-    [self.actorLabel setText:movieData.starring];
+    [self.directorLabel setText:movieBasic.director];
+    [self.actorLabel setText:movieBasic.starring];
 }
 
 #pragma mark - Private Method

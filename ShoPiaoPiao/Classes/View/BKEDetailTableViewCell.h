@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BKEDetailTableViewCell : UITableViewCell
 
-- (void) setMovieDetail:(BKEMovieDetailModel *)movieDetail;
+- (void) updateMovieDetail:(BKEMovieDetailModel *)movieDetail;
 
 @end
 

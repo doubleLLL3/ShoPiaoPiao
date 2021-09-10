@@ -29,6 +29,7 @@
 #pragma mark - Private Method
 
 - (void)setupView {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;  // 选中Cell不变色
     [self.contentView addSubview:self.purchaseButton];
     [self.purchaseButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self);

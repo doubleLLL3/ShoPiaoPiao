@@ -36,7 +36,7 @@
     return self;
 }
 
-- (void) setMovieDetail:(BKEMovieDetailModel *)movieDetail {
+- (void) updateMovieDetail:(BKEMovieDetailModel *)movieDetail {
     [self.summaryTextLabel setText:movieDetail.intro];
     
     NSMutableString *actorsInfo = [NSMutableString string];
@@ -93,68 +93,72 @@
 #pragma mark - Private Method
 
 - (void)setupView {
-    [self addSubview:self.summaryTabLabel];
-    [self addSubview:self.actorsInfoTabLabel];
-    [self addSubview:self.moreTabLabel];
-    [self addSubview:self.detailScrollView];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;  // 选中Cell不变色
+    [self.contentView addSubview:self.summaryTabLabel];
+    [self.contentView addSubview:self.actorsInfoTabLabel];
+    [self.contentView addSubview:self.moreTabLabel];
+    [self.contentView addSubview:self.detailScrollView];
+    // ❗️如果添加到self里而不是contentView
+    //      使用self.contentView.userInteractionEnabled = NO 禁止contentView里的交互，否则会覆盖子View的交互；
+    //      或者提前加载contentView
     
-    [self.detailScrollView addSubview:self.containerView];  // ❗️先用一个UIView包一层
-    [self.containerView addSubview:self.summaryTextView];
-    [self.containerView addSubview:self.actorsInfoTextView];
-    [self.containerView addSubview:self.moreTextView];
+    [self.detailScrollView addSubview:self.summaryTextView];
+    [self.detailScrollView addSubview:self.actorsInfoTextView];
+    [self.detailScrollView addSubview:self.moreTextView];
+    
     [self.summaryTextView addSubview:self.summaryTextLabel];
     [self.actorsInfoTextView addSubview:self.actorsInfoTextLabel];
     [self.moreTextView addSubview:self.moreTextLabel];
-
+    
     [self.summaryTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self).offset(10);
-        make.top.mas_equalTo(self);
+        make.left.mas_equalTo(self.contentView).offset(10);
+        make.top.mas_equalTo(self.contentView);
         make.width.mas_equalTo(self.actorsInfoTabLabel);
+        make.height.mas_equalTo(20);
     }];
     
     [self.actorsInfoTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self);
+        make.top.mas_equalTo(self.contentView);
         make.left.mas_equalTo(self.summaryTabLabel.mas_right);
         make.width.mas_equalTo(self.moreTabLabel);
+        make.height.mas_equalTo(20);
     }];
     
     [self.moreTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self);
+        make.top.mas_equalTo(self.contentView);
         make.left.mas_equalTo(self.actorsInfoTabLabel.mas_right);
         make.right.mas_equalTo(self).offset(-10);
+        make.height.mas_equalTo(20);
     }];
     
     [self.detailScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.mas_equalTo(self);
-        make.top.mas_equalTo(self.summaryTabLabel.mas_bottom);
-    }];
-    
-    [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.detailScrollView);
-        make.height.mas_equalTo(self.detailScrollView);     // 设置height撑开
+        make.left.right.bottom.mas_equalTo(self.contentView);
+//        make.top.mas_equalTo(self.summaryTabLabel.mas_bottom);
+        make.top.mas_equalTo(self.contentView).offset(20);
+        make.height.mas_equalTo(380);          // ❗️设置height撑开
     }];
     
     [self.summaryTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.bottom.mas_equalTo(self.containerView);
-        make.width.mas_equalTo(self);                       // 设置width撑开
+        make.left.top.bottom.mas_equalTo(self.detailScrollView);
+        make.width.mas_equalTo(self.contentView);                       // ❗️设置width撑开
     }];
 
     [self.actorsInfoTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.mas_equalTo(self.containerView);
+        make.top.bottom.mas_equalTo(self.detailScrollView);
         make.left.mas_equalTo(self.summaryTextView.mas_right);
-        make.width.mas_equalTo(self);                       // 设置width撑开
+        make.width.mas_equalTo(self.contentView);                       // 设置width撑开
     }];
 
     [self.moreTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.mas_equalTo(self.containerView);
+        make.top.bottom.mas_equalTo(self.detailScrollView);
         make.left.mas_equalTo(self.actorsInfoTextView.mas_right);
-        make.width.mas_equalTo(self);                      // 设置width撑开
-        make.right.mas_equalTo(self.containerView);        // ❗️最后需要和父视图连通；以一个整体来考虑
+        make.width.mas_equalTo(self.contentView);                      // 设置width撑开
+        make.right.mas_equalTo(self.detailScrollView);                 // ❗️最后需要和父视图连通；以一个整体来考虑
     }];
     
     // 每个View包含一个UILabel，用来显示文字
     [self.summaryTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.mas_equalTo(self.summaryTextView).offset(10);  // 设置边距
+        make.top.left.mas_equalTo(self.summaryTextView).offset(10);    // 设置边距
         make.right.mas_equalTo(self.summaryTextView).offset(-10);
         // ❗️不设bottom约束，让文字居上对齐
     }];
@@ -175,7 +179,7 @@
 - (UIScrollView *)detailScrollView {
     if (!_detailScrollView) {
         _detailScrollView = [[UIScrollView alloc] init];
-        _detailScrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
+        _detailScrollView.contentSize = CGSizeMake(self.contentView.bounds.size.width * 3, 380);
         _detailScrollView.pagingEnabled = YES;
         _detailScrollView.delegate = self;
     }

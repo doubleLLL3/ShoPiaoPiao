@@ -1,5 +1,5 @@
 //
-//  BKEMovieModel.h
+//  BKEMovieBasicModel.h
 //  ShoPiaoPiao
 //
 //  Created by 刘一博 on 2021/9/6.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BKEMovieModel : NSObject
+@interface BKEMovieBasicModel : NSObject
 
 @property(nonatomic, copy) NSString *name;
 @property(nonatomic, strong) NSNumber *rating;

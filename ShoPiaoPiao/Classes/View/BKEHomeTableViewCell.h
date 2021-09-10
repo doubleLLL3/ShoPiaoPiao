@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BKEMovieModel.h"
+#import "BKEMovieBasicModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, weak) id<BKEHomeTableViewCellDelegate> delegate;
 
-- (void) setMovieData:(BKEMovieModel *)movieData;
+- (void) updateMovieBasic:(BKEMovieBasicModel *)movieBasic;
 
 @end
 

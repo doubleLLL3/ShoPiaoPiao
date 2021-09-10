@@ -9,7 +9,7 @@
 #import "BKEHomeTableViewCell.h"
 #import "BKEIntroViewController.h"
 #import "BKEMovieListLoader.h"
-#import "BKEMovieModel.h"
+#import "BKEMovieBasicModel.h"
 #import "BKEMovieDetailModel.h"
 
 #import <AFNetworking/AFNetworking.h>
@@ -23,8 +23,7 @@ static NSString *const kCellId = @"CellInfo";
 
 @property(nonatomic, strong) UITableView *homeTableView;
 @property(nonatomic, strong) NSMutableArray *movieList;
-@property(nonatomic, strong) BKEMovieModel *movieData;
-@property(nonatomic, strong) BKEMovieDetailModel *movieDetail;
+@property(nonatomic, strong) BKEMovieBasicModel *movieBasic;
 @property(nonatomic, strong) MJRefreshNormalHeader *dropDownHeader;
 @property(nonatomic, strong) MJRefreshBackNormalFooter *pullFooter;
 @property(nonatomic, assign) NSInteger movieListIndex;
@@ -56,7 +55,7 @@ static NSString *const kCellId = @"CellInfo";
     self.homeTableView.mj_footer = self.pullFooter;
 
     // 先加载一次数据
-    [self loadMovieList];
+    [self requestMovieList];
     
     return ;
 }
@@ -73,10 +72,11 @@ static NSString *const kCellId = @"CellInfo";
     BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
         cell = [[BKEHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellId];
-    }
-    [cell setMovieData:self.movieList[indexPath.row]];
+    }  // ❗️可以在getter方法里注册所有的Cell
+    [cell updateMovieBasic:self.movieList[indexPath.row]];
 
     cell.purchaseButton.backgroundColor = [UIColor redColor];
+
     [cell.purchaseButton setEnabled:YES];
 
     cell.delegate = self;
@@ -95,8 +95,8 @@ static NSString *const kCellId = @"CellInfo";
     self.introViewController = [[BKEIntroViewController alloc] init];
     self.introViewController.title = @"电影详情";
     
-    self.movieData = self.movieList[indexPath.row];
-    [self loadMovieDetail:self.movieData.movieId];  // ❓添加：如果上次查询的就是这个moviewId，就不请求
+    self.movieBasic = self.movieList[indexPath.row];
+    [self.introViewController receiveMovieBasic:self.movieBasic];
     
     [self.navigationController pushViewController:self.introViewController animated:YES];
 }
@@ -111,13 +111,16 @@ static NSString *const kCellId = @"CellInfo";
 }
 
 #pragma mark - Private Method
-- (void)loadMovieList {
+- (void)requestMovieList {
     // 从URL GET json数据
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
     // ❗️weak解决循环引用
     
-    [manager GET:@"http://0.0.0.0:8888/data0.json" parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"http://0.0.0.0:8888/data0.json"
+      parameters:nil
+         headers:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
@@ -126,8 +129,8 @@ static NSString *const kCellId = @"CellInfo";
         
         NSArray *movieArray = responseObject[@"data"];
         for (NSDictionary *movieDic in movieArray) {
-            BKEMovieModel *movieData = [BKEMovieModel yy_modelWithJSON: movieDic];
-            [self.movieList addObject:movieData];
+            BKEMovieBasicModel *movieBasic = [BKEMovieBasicModel yy_modelWithJSON: movieDic];
+            [self.movieList addObject:movieBasic];
         }
         
         [self.homeTableView reloadData];  // 要关注线程，可能需要切换线程
@@ -139,21 +142,24 @@ static NSString *const kCellId = @"CellInfo";
     [self.pullFooter endRefreshing];      // 只要下拉，就重置上拉的状态
 }
 
-- (void)loadMoreMovieData {
+- (void)requestMoreMovieBasic {
     // 从URL GET json数据
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
     // ❗️weak解决循环引用
     
-    [manager GET:[NSString stringWithFormat:@"http://0.0.0.0:8888/data%ld.json", self.movieListIndex] parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:[NSString stringWithFormat:@"http://0.0.0.0:8888/data%ld.json", self.movieListIndex]
+      parameters:nil
+         headers:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.movieListIndex += 1;
         
         NSArray *movieArray = responseObject[@"data"];
         for (NSDictionary *movieDic in movieArray) {
-            BKEMovieModel *movieData = [BKEMovieModel yy_modelWithJSON: movieDic];
-            [self.movieList addObject:movieData];
+            BKEMovieBasicModel *movieBasic = [BKEMovieBasicModel yy_modelWithJSON: movieDic];
+            [self.movieList addObject:movieBasic];
         }
         
         [self.homeTableView reloadData];
@@ -163,25 +169,6 @@ static NSString *const kCellId = @"CellInfo";
         } else {
             [self.pullFooter endRefreshing];
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error!");
-    }];
-}
-
-- (void)loadMovieDetail:(NSString *)movieId {
-    // 从URL GET json数据
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
-    // ❗️weak解决循环引用
-    
-    [manager GET:[NSString stringWithFormat:@"https://douban.8610000.xyz/data/%@.json", movieId] parameters:nil headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-        self.movieDetail = [BKEMovieDetailModel yy_modelWithJSON: responseObject];
-        
-        [self.introViewController setupMovieData:self.movieData setupMovieDetail:self.movieDetail];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error!");
@@ -209,7 +196,7 @@ static NSString *const kCellId = @"CellInfo";
 
 - (MJRefreshNormalHeader *)dropDownHeader {
     if (!_dropDownHeader) {
-        _dropDownHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMovieList)];
+        _dropDownHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestMovieList)];
         
 //        // Set the ordinary state of animated images
 //        UIImage *idleImages = [UIImage imageNamed:idleImages];
@@ -234,7 +221,7 @@ static NSString *const kCellId = @"CellInfo";
 
 - (MJRefreshBackNormalFooter *)pullFooter {
     if (!_pullFooter) {
-        _pullFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreMovieData)];
+        _pullFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(requestMoreMovieBasic)];
         
         [_pullFooter setTitle:@"点击或上拉加载更多" forState:MJRefreshStateIdle];
         [_pullFooter setTitle:@"松开立即加载更多" forState:MJRefreshStatePulling];

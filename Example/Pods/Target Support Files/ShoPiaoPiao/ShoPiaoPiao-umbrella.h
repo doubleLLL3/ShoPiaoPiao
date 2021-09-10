@@ -14,7 +14,7 @@
 #import "BKEIntroViewController.h"
 #import "BKEMovieListLoader.h"
 #import "BKEMovieDetailModel.h"
-#import "BKEMovieModel.h"
+#import "BKEMovieBasicModel.h"
 #import "BKEDetailTableViewCell.h"
 #import "BKEHomeTableViewCell.h"
 #import "BKEInfoTableViewCell.h"
