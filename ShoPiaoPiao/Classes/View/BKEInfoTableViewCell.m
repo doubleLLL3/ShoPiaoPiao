@@ -114,6 +114,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:16];
+        _titleLabel.textColor = [UIColor blueColor];
     }
     return _titleLabel;
 }
@@ -122,7 +123,6 @@
     if (!_subtitleLabel) {
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.font = [UIFont systemFontOfSize:12];
-        _subtitleLabel.textColor = [UIColor grayColor];
         _subtitleLabel.numberOfLines = 0;
     }
     return _subtitleLabel;

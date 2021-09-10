@@ -18,9 +18,9 @@
 @property(nonatomic, strong) UIView *summaryTextView;
 @property(nonatomic, strong) UIView *actorsInfoTextView;
 @property(nonatomic, strong) UIView *moreTextView;
-@property(nonatomic, strong) UILabel *summaryText;
-@property(nonatomic, strong) UILabel *actorsInfoText;
-@property(nonatomic, strong) UILabel *moreText;
+@property(nonatomic, strong) UILabel *summaryTextLabel;
+@property(nonatomic, strong) UILabel *actorsInfoTextLabel;
+@property(nonatomic, strong) UILabel *moreTextLabel;
 
 @end
 
@@ -37,26 +37,26 @@
 }
 
 - (void) setMovieDetail:(BKEMovieDetailModel *)movieDetail {
-    [self.summaryText setText:movieDetail.intro];
+    [self.summaryTextLabel setText:movieDetail.intro];
     
-    NSString *actorsInfo = @"";
+    NSMutableString *actorsInfo = [NSMutableString string];
     for (NSDictionary *actorDic in movieDetail.actors) {
         NSString *actorInfo = [NSString stringWithFormat:
-                               @"[%@]\n\n"
-                               "%@\n"
-                               "简介：%@\n"
-                               "链接：%@\n-------------------------\n\n",
+                               @"%@\n\n "
+                               "%@\n "
+                               "[简介] %@\n "
+                               "[链接] %@\n-------------------------\n\n",
                                actorDic[@"name"],
                                actorDic[@"title"],
                                actorDic[@"abstract"],
                                actorDic[@"sharing_url"]
                                ];
-        actorsInfo = [actorsInfo stringByAppendingString:actorInfo];
+        [actorsInfo appendString:actorInfo];
     }
 
-    [self.actorsInfoText setText:actorsInfo];
+    [self.actorsInfoTextLabel setText:actorsInfo];
     
-    [self.moreText setText:@"赶紧购票吧！"];
+    [self.moreTextLabel setText:@"赶紧购票吧！"];
 }
 
 #pragma mark - Other Delegate
@@ -102,25 +102,26 @@
     [self.containerView addSubview:self.summaryTextView];
     [self.containerView addSubview:self.actorsInfoTextView];
     [self.containerView addSubview:self.moreTextView];
-    [self.summaryTextView addSubview:self.summaryText];
-    [self.actorsInfoTextView addSubview:self.actorsInfoText];
-    [self.moreTextView addSubview:self.moreText];
+    [self.summaryTextView addSubview:self.summaryTextLabel];
+    [self.actorsInfoTextView addSubview:self.actorsInfoTextLabel];
+    [self.moreTextView addSubview:self.moreTextLabel];
 
     [self.summaryTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.mas_equalTo(self);
-        make.width.mas_equalTo(self).dividedBy(3);
+        make.left.mas_equalTo(self).offset(10);
+        make.top.mas_equalTo(self);
+        make.width.mas_equalTo(self.actorsInfoTabLabel);
     }];
     
     [self.actorsInfoTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.left.mas_equalTo(self.summaryTabLabel.mas_right);
-        make.width.mas_equalTo(self).dividedBy(3);
+        make.width.mas_equalTo(self.moreTabLabel);
     }];
     
     [self.moreTabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self);
         make.left.mas_equalTo(self.actorsInfoTabLabel.mas_right);
-        make.width.mas_equalTo(self).dividedBy(3);
+        make.right.mas_equalTo(self).offset(-10);
     }];
     
     [self.detailScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -152,16 +153,16 @@
     }];
     
     // 每个View包含一个UILabel，用来显示文字
-    [self.summaryText mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.summaryTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.mas_equalTo(self.summaryTextView).offset(10);  // 设置边距
         make.right.mas_equalTo(self.summaryTextView).offset(-10);
         // ❗️不设bottom约束，让文字居上对齐
     }];
-    [self.actorsInfoText mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.actorsInfoTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.mas_equalTo(self.actorsInfoTextView).offset(10);
         make.right.mas_equalTo(self.actorsInfoTextView).offset(-10);
     }];
-    [self.moreText mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.moreTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.mas_equalTo(self.moreTextView).offset(10);
         make.right.mas_equalTo(self.moreTextView).offset(-10);
     }];
@@ -184,11 +185,17 @@
 - (UILabel *)summaryTabLabel {
     if (!_summaryTabLabel) {
         _summaryTabLabel = [[UILabel alloc] init];
+        // 设置边框和圆角
         _summaryTabLabel.layer.borderColor = [UIColor grayColor].CGColor;
         _summaryTabLabel.layer.borderWidth = 0.5;
-        _summaryTabLabel.font = [UIFont systemFontOfSize:18];
+        _summaryTabLabel.layer.cornerRadius = 5;
+        _summaryTabLabel.layer.masksToBounds = YES;
+        // 设置文本
+        _summaryTabLabel.font = [UIFont systemFontOfSize:16];
         _summaryTabLabel.textAlignment = NSTextAlignmentCenter;
+        _summaryTabLabel.textColor = [UIColor brownColor];
         [_summaryTabLabel setText:@"电影简介"];
+        // 设置手势
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(summaryTabTapAction)];
         [_summaryTabLabel addGestureRecognizer:tapGesture];
         _summaryTabLabel.userInteractionEnabled = YES;
@@ -199,11 +206,17 @@
 - (UILabel *)actorsInfoTabLabel {
     if (!_actorsInfoTabLabel) {
         _actorsInfoTabLabel = [[UILabel alloc] init];
+        // 设置边框和圆角
         _actorsInfoTabLabel.layer.borderColor = [UIColor grayColor].CGColor;
         _actorsInfoTabLabel.layer.borderWidth = 0.5;
-        _actorsInfoTabLabel.font = [UIFont systemFontOfSize:18];
+        _actorsInfoTabLabel.layer.cornerRadius = 5;
+        _actorsInfoTabLabel.layer.masksToBounds = YES;
+        // 设置文本
+        _actorsInfoTabLabel.font = [UIFont systemFontOfSize:16];
         _actorsInfoTabLabel.textAlignment = NSTextAlignmentCenter;
+        _actorsInfoTabLabel.textColor = [UIColor orangeColor];
         [_actorsInfoTabLabel setText:@"演员信息"];
+        // 设置手势
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actorsInfoTabTapAction)];
         [_actorsInfoTabLabel addGestureRecognizer:tapGesture];
         _actorsInfoTabLabel.userInteractionEnabled = YES;
@@ -215,11 +228,17 @@
 - (UILabel *)moreTabLabel {
     if (!_moreTabLabel) {
         _moreTabLabel = [[UILabel alloc] init];
+        // 设置边框和圆角
         _moreTabLabel.layer.borderColor = [UIColor grayColor].CGColor;
         _moreTabLabel.layer.borderWidth = 0.5;
-        _moreTabLabel.font = [UIFont systemFontOfSize:18];
+        _moreTabLabel.layer.cornerRadius = 5;
+        _moreTabLabel.layer.masksToBounds = YES;
+        // 设置文本
+        _moreTabLabel.font = [UIFont systemFontOfSize:16];
         _moreTabLabel.textAlignment = NSTextAlignmentCenter;
+        _moreTabLabel.textColor = [UIColor redColor];
         [_moreTabLabel setText:@"更多信息"];
+        // 设置手势
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(moreTabTapAction)];
         [_moreTabLabel addGestureRecognizer:tapGesture];
         _moreTabLabel.userInteractionEnabled = YES;
@@ -256,32 +275,49 @@
     return _moreTextView;
 }
 
-- (UILabel *)summaryText {
-    if (!_summaryText) {
-        _summaryText = [[UILabel alloc] init];
-        _summaryText.font = [UIFont systemFontOfSize:14];
-        _summaryText.numberOfLines = 0;
+- (UILabel *)summaryTextLabel {
+    if (!_summaryTextLabel) {
+        _summaryTextLabel = [[UILabel alloc] init];
+        
+        _summaryTextLabel.layer.borderColor = [UIColor brownColor].CGColor;
+        _summaryTextLabel.layer.borderWidth = 1;
+        _summaryTextLabel.layer.cornerRadius = 5;
+        _summaryTextLabel.layer.masksToBounds = YES;
+        
+        _summaryTextLabel.font = [UIFont systemFontOfSize:15];
+        _summaryTextLabel.numberOfLines = 0;
     }
-    return _summaryText;
+    return _summaryTextLabel;
 }
 
-- (UILabel *)actorsInfoText {
-    if (!_actorsInfoText) {
-        _actorsInfoText = [[UILabel alloc] init];
-        _actorsInfoText.font = [UIFont systemFontOfSize:12];
-        _actorsInfoText.numberOfLines = 0;
+- (UILabel *)actorsInfoTextLabel {
+    if (!_actorsInfoTextLabel) {
+        _actorsInfoTextLabel = [[UILabel alloc] init];
+        
+        _actorsInfoTextLabel.layer.borderColor = [UIColor orangeColor].CGColor;
+        _actorsInfoTextLabel.layer.borderWidth = 1;
+        _actorsInfoTextLabel.layer.cornerRadius = 5;
+        _actorsInfoTextLabel.layer.masksToBounds = YES;
+        
+        _actorsInfoTextLabel.font = [UIFont systemFontOfSize:12];
+        _actorsInfoTextLabel.numberOfLines = 0;
     }
-    return _actorsInfoText;
+    return _actorsInfoTextLabel;
 }
 
-- (UILabel *)moreText {
-    if (!_moreText) {
-        _moreText = [[UILabel alloc] init];
-        _moreText.font = [UIFont systemFontOfSize:14];
-        _moreText.textColor = [UIColor redColor];
-        _moreText.numberOfLines = 0;
+- (UILabel *)moreTextLabel {
+    if (!_moreTextLabel) {
+        _moreTextLabel = [[UILabel alloc] init];
+        
+        _moreTextLabel.layer.borderColor = [UIColor redColor].CGColor;
+        _moreTextLabel.layer.borderWidth = 1;
+        _moreTextLabel.layer.cornerRadius = 5;
+        _moreTextLabel.layer.masksToBounds = YES;
+        
+        _moreTextLabel.font = [UIFont systemFontOfSize:15];
+        _moreTextLabel.numberOfLines = 0;
     }
-    return _moreText;
+    return _moreTextLabel;
 }
 
 @end
