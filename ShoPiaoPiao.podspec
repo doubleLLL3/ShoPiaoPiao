@@ -44,5 +44,6 @@ TODO: Add long description of the pod here.
    s.dependency 'SDWebImage'
    s.dependency 'YYModel'
    s.dependency 'MJRefresh'
+   s.dependency 'MBProgressHUD'
    
 end

@@ -8,7 +8,6 @@
 #import "BKEHomeViewController.h"
 #import "BKEHomeTableViewCell.h"
 #import "BKEIntroViewController.h"
-#import "BKEMovieListLoader.h"
 #import "BKEMovieBasicModel.h"
 #import "BKEMovieDetailModel.h"
 
@@ -16,6 +15,31 @@
 #import <YYModel/YYModel.h>
 #import <MJRefresh/MJRefresh.h>
 #import <SDWebImage/SDWebImage.h>
+
+#define mweakify(val) \
+m_weakify_(__weak, val)
+
+#define m_weakify_(CONTEXT, VAR) \
+CONTEXT __typeof__(VAR) VAR_weak_ = (VAR);
+
+#define mstrongify(val) \
+m_strongify_(val)
+
+#define m_strongify_(VAR) \
+__strong __typeof__(VAR) VAR = VAR_weak_;
+
+#define kCellHeight 150
+#define kRequestTimeoutInterval 5.0f
+
+#define kIntroViewControllerTitle @"电影详情"
+#define kDataNameOfResponseObject @"data"
+#define kDropDownTitleForIdle @"下拉可以刷新"
+#define kDropDownTitleForPulling @"松开立即刷新"
+#define kDropDownTitleForRefreshing @"正在加载中..."
+#define kPullTitleForIdle @"点击或上拉加载更多"
+#define kPullTitleForPulling @"松开立即加载更多"
+#define kPullTitleForRefreshing @"正在加载更多数据..."
+#define kPullTitleForNoMoreData @"没有更多数据了"
 
 static NSString *const kCellId = @"CellInfo";
 
@@ -87,13 +111,13 @@ static NSString *const kCellId = @"CellInfo";
 
 // 每个Cell的行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    return kCellHeight;
 }
 
 // 点击Cell后进入详细信息页
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.introViewController = [[BKEIntroViewController alloc] init];
-    self.introViewController.title = @"电影详情";
+    self.introViewController.title = kIntroViewControllerTitle;
     
     self.movieBasic = self.movieList[indexPath.row];
     [self.introViewController receiveMovieBasic:self.movieBasic];
@@ -103,10 +127,9 @@ static NSString *const kCellId = @"CellInfo";
 
 #pragma mark - Other Delegate
 
-// 实现点击购买按钮后的事件：按钮变灰，文本变为“已购买”
+// 点击购票按钮后，Controller处理数据
 - (void)tableViewCell:(UITableViewCell *)tableViewCell clickPuchaseButton:(UIButton *)purchaseButton {
-    purchaseButton.backgroundColor = [UIColor grayColor];
-    [purchaseButton setEnabled:NO];
+    // do something...
     return ;
 }
 
@@ -115,19 +138,23 @@ static NSString *const kCellId = @"CellInfo";
     // 从URL GET json数据
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
+    manager.requestSerializer.timeoutInterval = kRequestTimeoutInterval;  // 最长请求时间
+    
     // ❗️weak解决循环引用
+    mweakify(self);
     
     [manager GET:@"http://0.0.0.0:8888/data0.json"
       parameters:nil
          headers:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress:^(NSProgress * _Nonnull downloadProgress) {}
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
+        mstrongify(self);
+        
         [self.movieList removeAllObjects];
         self.movieListIndex = 1;
         
-        NSArray *movieArray = responseObject[@"data"];
+        NSArray *movieArray = responseObject[kDataNameOfResponseObject];
         for (NSDictionary *movieDic in movieArray) {
             BKEMovieBasicModel *movieBasic = [BKEMovieBasicModel yy_modelWithJSON: movieDic];
             [self.movieList addObject:movieBasic];
@@ -135,8 +162,10 @@ static NSString *const kCellId = @"CellInfo";
         
         [self.homeTableView reloadData];  // 要关注线程，可能需要切换线程
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error!");
+    }
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        mstrongify(self);
+        [self.pullFooter endRefreshingWithNoMoreData];
     }];
     [self.dropDownHeader endRefreshing];
     [self.pullFooter endRefreshing];      // 只要下拉，就重置上拉的状态
@@ -146,17 +175,20 @@ static NSString *const kCellId = @"CellInfo";
     // 从URL GET json数据
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
+    manager.requestSerializer.timeoutInterval = kRequestTimeoutInterval;  // 最长请求时间
     // ❗️weak解决循环引用
+    mweakify(self);
     
     [manager GET:[NSString stringWithFormat:@"http://0.0.0.0:8888/data%ld.json", self.movieListIndex]
       parameters:nil
          headers:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress:^(NSProgress * _Nonnull downloadProgress) {}
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        mstrongify(self);
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         self.movieListIndex += 1;
         
-        NSArray *movieArray = responseObject[@"data"];
+        NSArray *movieArray = responseObject[kDataNameOfResponseObject];
         for (NSDictionary *movieDic in movieArray) {
             BKEMovieBasicModel *movieBasic = [BKEMovieBasicModel yy_modelWithJSON: movieDic];
             [self.movieList addObject:movieBasic];
@@ -164,14 +196,15 @@ static NSString *const kCellId = @"CellInfo";
         
         [self.homeTableView reloadData];
         
-        if (((NSArray *)responseObject[@"data"]).count < 1) {
+        if (((NSArray *)responseObject[kDataNameOfResponseObject]).count < 1) {
             [self.pullFooter endRefreshingWithNoMoreData];
         } else {
             [self.pullFooter endRefreshing];
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error!");
+    }
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        mstrongify(self);
+        [self.pullFooter endRefreshingWithNoMoreData];
     }];
 }
 
@@ -212,9 +245,9 @@ static NSString *const kCellId = @"CellInfo";
         
         _dropDownHeader.lastUpdatedTimeLabel.hidden = YES;
         
-        [_dropDownHeader setTitle:@"下拉可以刷新" forState:MJRefreshStateIdle];
-        [_dropDownHeader setTitle:@"松开立即刷新" forState:MJRefreshStatePulling];
-        [_dropDownHeader setTitle:@"正在加载中..." forState:MJRefreshStateRefreshing];
+        [_dropDownHeader setTitle:kDropDownTitleForIdle forState:MJRefreshStateIdle];
+        [_dropDownHeader setTitle:kDropDownTitleForPulling forState:MJRefreshStatePulling];
+        [_dropDownHeader setTitle:kDropDownTitleForRefreshing forState:MJRefreshStateRefreshing];
     }
     return _dropDownHeader;
 }
@@ -223,10 +256,10 @@ static NSString *const kCellId = @"CellInfo";
     if (!_pullFooter) {
         _pullFooter = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(requestMoreMovieBasic)];
         
-        [_pullFooter setTitle:@"点击或上拉加载更多" forState:MJRefreshStateIdle];
-        [_pullFooter setTitle:@"松开立即加载更多" forState:MJRefreshStatePulling];
-        [_pullFooter setTitle:@"正在加载更多数据..." forState:MJRefreshStateRefreshing];
-        [_pullFooter setTitle:@"没有更多数据了" forState:MJRefreshStateNoMoreData];
+        [_pullFooter setTitle:kPullTitleForIdle forState:MJRefreshStateIdle];
+        [_pullFooter setTitle:kPullTitleForPulling forState:MJRefreshStatePulling];
+        [_pullFooter setTitle:kPullTitleForRefreshing forState:MJRefreshStateRefreshing];
+        [_pullFooter setTitle:kPullTitleForNoMoreData forState:MJRefreshStateNoMoreData];
     }
     return _pullFooter;
 }

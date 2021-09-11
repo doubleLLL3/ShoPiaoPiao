@@ -8,6 +8,14 @@
 #import "BKEPurchaseTableViewCell.h"
 #import <Masonry/Masonry.h>
 
+#define kButtonHeight 30
+#define kButtonWidth 80
+#define kCornerRadius 10
+#define kFontOfButtonSize 14
+
+#define kToPurchaseState @"购票"
+#define kPurchasedState @"已购票"
+
 @interface BKEPurchaseTableViewCell ()
 
 @property(nonatomic, strong) UIButton *purchaseButton;
@@ -33,13 +41,17 @@
     [self.contentView addSubview:self.purchaseButton];
     [self.purchaseButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self);
-        make.width.mas_equalTo(80);
-        make.height.mas_equalTo(30);
+        make.height.mas_equalTo(kButtonHeight);
+        make.width.mas_equalTo(kButtonWidth);
     }];
     return ;
 }
 
 - (void)purchaseButtonClick {
+    self.purchaseButton.backgroundColor = [UIColor grayColor];
+    [self.purchaseButton setEnabled:NO];
+    
+    // 点击购票按钮后，让Controller处理数据
     if (self.delegate && [self.delegate respondsToSelector:@selector(tableViewCell:clickPuchaseButton:)]) {
         [self.delegate tableViewCell:self clickPuchaseButton:self.purchaseButton];
     }
@@ -51,12 +63,12 @@
     if (!_purchaseButton) {
         _purchaseButton = [[UIButton alloc] init];
         _purchaseButton.backgroundColor = [UIColor redColor];
-        _purchaseButton.layer.cornerRadius = 10;
+        _purchaseButton.layer.cornerRadius = kCornerRadius;
         _purchaseButton.layer.masksToBounds = YES;
-        _purchaseButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _purchaseButton.titleLabel.font = [UIFont systemFontOfSize:kFontOfButtonSize];
         
-        [_purchaseButton setTitle:@"购票" forState:UIControlStateNormal];
-        [_purchaseButton setTitle:@"已购票" forState:UIControlStateDisabled];
+        [_purchaseButton setTitle:kToPurchaseState forState:UIControlStateNormal];
+        [_purchaseButton setTitle:kPurchasedState forState:UIControlStateDisabled];
         
         [_purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }

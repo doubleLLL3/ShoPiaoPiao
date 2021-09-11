@@ -14,12 +14,25 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <YYModel/YYModel.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+
+#define mweakify(val) \
+m_weakify_(__weak, val)
+
+#define m_weakify_(CONTEXT, VAR) \
+CONTEXT __typeof__(VAR) VAR_weak_ = (VAR);
+
+#define mstrongify(val) \
+m_strongify_(val)
+
+#define m_strongify_(VAR) \
+__strong __typeof__(VAR) VAR = VAR_weak_;
 
 #define infoTableViewCellHeight 200
 #define detailTableViewCellHeight 400
 #define purchaseTableViewCellHeight 50
 #define defaultTableViewCellHeight 50
-
+#define kRequestTimeoutInterval 5.0f
 
 static NSString *const kCellInfo = @"CellInfo";
 static NSString *const kCellDetail = @"CellDetail";
@@ -104,10 +117,9 @@ static NSString *const kCellPurchase = @"CellPurchase";
 
 #pragma mark - Other Delegate
 
-// 实现点击购买按钮后的事件：按钮变灰，文本变为“已购买”。❗️应该放在View里
+// 点击购票按钮后，Controller处理数据
 - (void)tableViewCell:(UITableViewCell *)tableViewCell clickPuchaseButton:(UIButton *)purchaseButton {
-    purchaseButton.backgroundColor = [UIColor grayColor];
-    [purchaseButton setEnabled:NO];
+    // do something...
     return ;
 }
 
@@ -117,21 +129,31 @@ static NSString *const kCellPurchase = @"CellPurchase";
     // 从URL GET json数据
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;  // 设置不走缓存
+    manager.requestSerializer.timeoutInterval = kRequestTimeoutInterval;  // 最长请求时间
+    
     // ❗️weak解决循环引用
-    // ❗️❗️❗️
+    mweakify(self);
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [manager GET:[NSString stringWithFormat:@"https://douban.8610000.xyz/data/%@.json", movieId]
       parameters:nil
          headers:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        progress:^(NSProgress * _Nonnull downloadProgress) {}
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
+        mstrongify(self);
+        
         self.movieDetail = [BKEMovieDetailModel yy_modelWithJSON: responseObject];
         
         [self.introTableView reloadData];  // 渲染Cell
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error!");
+        [hud hideAnimated:YES];
+        
+    }
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        hud.label.text = @"加载失败！";
+        [hud hideAnimated:YES afterDelay:2];
     }];
 }
 

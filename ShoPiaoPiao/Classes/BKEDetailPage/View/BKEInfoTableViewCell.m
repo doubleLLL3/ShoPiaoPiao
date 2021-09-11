@@ -9,6 +9,21 @@
 #import <Masonry/Masonry.h>
 #import <SDWebImage/SDWebImage.h>
 
+#define kMargin 10
+#define kLargeMargin 20
+#define kImageHeight 180
+#define kImageWidth kImageHeight / 1.5
+#define kLabelHeight 20
+#define kLabelWidth 180
+#define kTitleLabelHeight 30
+#define kSubtitleLabelHeight 60
+#define kAkaLabelHeight 30
+#define kFontOfSize 12
+#define kFontOfTitleLabelSize 16
+
+#define kDurationsPrefix @"片长："
+#define kAkasPrefix @"又名："
+
 @interface BKEInfoTableViewCell ()
 
 // 电影封面、标题、评分、导演、演员表、购票按钮
@@ -37,14 +52,14 @@
     [self.titleLabel setText:movieBasic.name];
     
     [self.subtitleLabel setText:movieDetail.card_subtitle];
-    NSString *durations = @"片长：";
+    NSString *durations = kDurationsPrefix;
     for (NSString *duration in movieDetail.durations) {
         NSString *durationWithSpace = [NSString stringWithFormat:@"%@ ", duration];  // 用空格隔开
         durations = [durations stringByAppendingString:durationWithSpace];
     }
     [self.durationsLabel setText:durations];
     
-    NSString *akas = @"又名：";
+    NSString *akas = kAkasPrefix;
     for (NSString *aka in movieDetail.aka) {
         NSString *akaWithSpace = [NSString stringWithFormat:@"%@ ", aka];            // 用空格隔开
         akas = [akas stringByAppendingString:akaWithSpace];
@@ -65,39 +80,39 @@
     [self addSubview:self.akaLabel];
     
     [self.leftImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(10);
+        make.left.mas_equalTo(kMargin);
         make.centerY.mas_equalTo(self);
-        make.height.mas_equalTo(180);
-        make.width.mas_equalTo(self.leftImageView.mas_height).dividedBy(1.5);
+        make.height.mas_equalTo(kImageHeight);
+        make.width.mas_equalTo(kImageWidth);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftImageView.mas_right).offset(20);
-        make.top.mas_equalTo(self.leftImageView).offset(10);
-        make.height.mas_equalTo(30);
-        make.width.mas_equalTo(self).dividedBy(1.8);
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(kLargeMargin);
+        make.top.mas_equalTo(self.leftImageView).offset(kMargin);
+        make.height.mas_equalTo(kTitleLabelHeight);
+        make.width.mas_equalTo(kLabelWidth);
     }];
     
     [self.subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.titleLabel.mas_bottom);
-        make.height.mas_equalTo(60);
-        make.width.mas_equalTo(self.titleLabel);
+        make.height.mas_equalTo(kSubtitleLabelHeight);
+        make.width.mas_equalTo(kLabelWidth);
     }];
     
     [self.durationsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.subtitleLabel.mas_bottom);
         make.bottom.mas_equalTo(self.akaLabel.mas_top);
-        make.width.mas_equalTo(self.titleLabel);
+        make.width.mas_equalTo(kLabelWidth);
     }];
     
     [self.akaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.titleLabel);
         make.top.mas_equalTo(self.durationsLabel.mas_bottom);
         make.bottom.mas_equalTo(self.leftImageView);
-        make.height.mas_equalTo(30);
-        make.width.mas_equalTo(self.titleLabel);
+        make.height.mas_equalTo(kAkaLabelHeight);
+        make.width.mas_equalTo(kLabelWidth);
     }];
     
     return ;
@@ -116,7 +131,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:16];
+        _titleLabel.font = [UIFont systemFontOfSize:kFontOfTitleLabelSize];
         _titleLabel.textColor = [UIColor blueColor];
     }
     return _titleLabel;
@@ -125,7 +140,7 @@
 - (UILabel *)subtitleLabel {
     if (!_subtitleLabel) {
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.font = [UIFont systemFontOfSize:12];
+        _subtitleLabel.font = [UIFont systemFontOfSize:kFontOfSize];
         _subtitleLabel.numberOfLines = 0;
     }
     return _subtitleLabel;
@@ -134,7 +149,7 @@
 - (UILabel *)durationsLabel {
     if (!_durationsLabel) {
         _durationsLabel = [[UILabel alloc] init];
-        _durationsLabel.font = [UIFont systemFontOfSize:12];
+        _durationsLabel.font = [UIFont systemFontOfSize:kFontOfSize];
         _durationsLabel.textColor = [UIColor grayColor];
         _durationsLabel.numberOfLines = 0;
     }
@@ -144,7 +159,7 @@
 - (UILabel *)akaLabel {
     if (!_akaLabel) {
         _akaLabel = [[UILabel alloc] init];
-        _akaLabel.font = [UIFont systemFontOfSize:12];
+        _akaLabel.font = [UIFont systemFontOfSize:kFontOfSize];
         _akaLabel.textColor = [UIColor grayColor];
         _akaLabel.numberOfLines = 0;
     }
