@@ -34,9 +34,12 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define defaultTableViewCellHeight 50
 #define kRequestTimeoutInterval 5.0f
 
+#define kRequestURLForMovieDetailWithMovieId @"https://douban.8610000.xyz/data/%@.json"
+
 #define kCellInfo @"CellInfo"
 #define kCellDetail @"CellDetail"
 #define kCellPurchase @"CellPurchase"
+#define kHudLabelTextForError @"加载失败！"
 
 @interface BKEIntroViewController () <UITableViewDataSource, UITableViewDelegate, BKEPurchaseTableViewCellDelegate>
 
@@ -136,7 +139,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    [manager GET:[NSString stringWithFormat:@"https://douban.8610000.xyz/data/%@.json", movieId]
+    [manager GET:[NSString stringWithFormat:kRequestURLForMovieDetailWithMovieId, movieId]
       parameters:nil
          headers:nil
         progress:^(NSProgress * _Nonnull downloadProgress) {}
@@ -152,7 +155,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
         
     }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        hud.label.text = @"加载失败！";
+        hud.label.text = kHudLabelTextForError;
         [hud hideAnimated:YES afterDelay:2];
     }];
 }

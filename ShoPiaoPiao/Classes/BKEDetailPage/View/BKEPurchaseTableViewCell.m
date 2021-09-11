@@ -47,6 +47,7 @@
     return ;
 }
 
+// 点击购票按钮
 - (void)purchaseButtonClick {
     self.purchaseButton.backgroundColor = [UIColor grayColor];
     [self.purchaseButton setEnabled:NO];

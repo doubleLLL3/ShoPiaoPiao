@@ -31,6 +31,9 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define kCellHeight 150
 #define kRequestTimeoutInterval 5.0f
 
+#define kRequestURLForMovieBasicWithIndex @"http://0.0.0.0:8888/data%ld.json"
+#define kIndexForFirstRequest (NSInteger)0
+
 #define kIntroViewControllerTitle @"电影详情"
 #define kDataNameOfResponseObject @"data"
 #define kDropDownTitleForIdle @"下拉可以刷新"
@@ -91,7 +94,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     return self.movieList.count;
 }
 
-// 每个位置的Cell内容
+// 渲染Cell内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BKEHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellId];
     if (!cell) {
@@ -143,7 +146,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     // ❗️weak解决循环引用
     mweakify(self);
     
-    [manager GET:@"http://0.0.0.0:8888/data0.json"
+    [manager GET:[NSString stringWithFormat:kRequestURLForMovieBasicWithIndex, kIndexForFirstRequest]
       parameters:nil
          headers:nil
         progress:^(NSProgress * _Nonnull downloadProgress) {}
@@ -179,7 +182,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     // ❗️weak解决循环引用
     mweakify(self);
     
-    [manager GET:[NSString stringWithFormat:@"http://0.0.0.0:8888/data%ld.json", self.movieListIndex]
+    [manager GET:[NSString stringWithFormat:kRequestURLForMovieBasicWithIndex, self.movieListIndex]
       parameters:nil
          headers:nil
         progress:^(NSProgress * _Nonnull downloadProgress) {}

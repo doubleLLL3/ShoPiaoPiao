@@ -24,6 +24,10 @@
 "%@\n "\
 "[简介] %@\n "\
 "[链接] %@\n-------------------------\n"
+#define kKeyActorName @"name"
+#define kKeyActorTitle @"title"
+#define kKeyActorAbstract @"abstract"
+#define kKeyActorURL @"sharing_url"
 #define kMoreText @"赶紧购票吧！"
 
 @interface BKEDetailTableViewCell () <UIScrollViewDelegate>
@@ -32,14 +36,15 @@
 @property(nonatomic, strong) UILabel *summaryTabLabel;
 @property(nonatomic, strong) UILabel *actorsInfoTabLabel;
 @property(nonatomic, strong) UILabel *moreTabLabel;
+
 @property(nonatomic, strong) UIScrollView *detailScrollView;
 @property(nonatomic, strong) UIView *containerView;
 @property(nonatomic, strong) UIView *summaryTextView;
 @property(nonatomic, strong) UIView *actorsInfoTextView;
-@property(nonatomic, strong) UIView *kMoreTextView;
+@property(nonatomic, strong) UIView *moreTextView;
 @property(nonatomic, strong) UILabel *summaryTextLabel;
 @property(nonatomic, strong) UILabel *actorsInfoTextLabel;
-@property(nonatomic, strong) UILabel *kMoreTextLabel;
+@property(nonatomic, strong) UILabel *moreTextLabel;
 
 @end
 
@@ -61,20 +66,21 @@
     NSMutableString *actorsInfo = [NSMutableString string];
     for (NSDictionary *actorDic in movieDetail.actors) {
         NSString *actorInfo = [NSString stringWithFormat:kActorInfoFormat,
-                               actorDic[@"name"],
-                               actorDic[@"title"],
-                               actorDic[@"abstract"],
-                               actorDic[@"sharing_url"]
+                               actorDic[kKeyActorName],
+                               actorDic[kKeyActorTitle],
+                               actorDic[kKeyActorAbstract],
+                               actorDic[kKeyActorURL]
                                ];
         [actorsInfo appendString:actorInfo];
     }
 
     [self.actorsInfoTextLabel setText:actorsInfo];
     
-    [self.kMoreTextLabel setText:kMoreText];
+    [self.moreTextLabel setText:kMoreText];
 }
 
 #pragma mark - Other Delegate
+// 滑动时更改Tab状态
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
    if (scrollView.contentOffset.x >= self.detailScrollView.bounds.size.width * 1.5) {
         [self.summaryTabLabel setEnabled:NO];
@@ -92,7 +98,7 @@
 }
 
 #pragma mark - Actions
-
+// 点击Tab标签时，滑动到对应内容
 -(void) summaryTabTapAction {
     [self.detailScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
@@ -116,21 +122,21 @@
     //      使用self.contentView.userInteractionEnabled = NO 禁止contentView里的交互，否则会覆盖子View的交互；
     //      或者提前加载contentView
 
-    // TabsView里有三个TabLabel
+    // 1⃣️TabsView里有三个TabLabel
     [self.tabsView addSubview:self.summaryTabLabel];
     [self.tabsView addSubview:self.actorsInfoTabLabel];
     [self.tabsView addSubview:self.moreTabLabel];
     
-    // ScrollView里有三个TextView
+    // 2⃣️ScrollView里有三个TextView
     [self.detailScrollView addSubview:self.summaryTextView];
     [self.detailScrollView addSubview:self.actorsInfoTextView];
-    [self.detailScrollView addSubview:self.kMoreTextView];
+    [self.detailScrollView addSubview:self.moreTextView];
     // 每个TextView里一个TextLabel
     [self.summaryTextView addSubview:self.summaryTextLabel];
     [self.actorsInfoTextView addSubview:self.actorsInfoTextLabel];
-    [self.kMoreTextView addSubview:self.kMoreTextLabel];
+    [self.moreTextView addSubview:self.moreTextLabel];
     
-    // Tabs栏
+    // 1⃣️Tabs栏
     [self.tabsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView).offset(kMargin);
         make.right.mas_equalTo(self.contentView).offset(-kMargin);
@@ -154,7 +160,7 @@
         make.left.mas_equalTo(self.actorsInfoTabLabel.mas_right);
     }];
     
-    // 滑动栏——电影简介、演员信息、更多信息
+    // 2⃣️滑动栏——电影简介、演员信息、更多信息
     [self.detailScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.mas_equalTo(self.contentView);
         make.top.mas_equalTo(self.tabsView.mas_bottom);
@@ -173,7 +179,7 @@
         make.width.mas_equalTo(UIScreen.mainScreen.bounds.size.width);      // 设置width撑开
     }];
 
-    [self.kMoreTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.moreTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.mas_equalTo(self.detailScrollView);
         make.left.mas_equalTo(self.actorsInfoTextView.mas_right);
         make.width.mas_equalTo(UIScreen.mainScreen.bounds.size.width);      // 设置width撑开
@@ -181,7 +187,7 @@
         // 3⃣️最后滑动边界right需要和父视图绑定；以一个整体来考虑
     }];
     
-     // 每个TextView包含一个UILabel，显示文字
+    // 每个TextView包含一个UILabel，显示文字
     [self.summaryTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.mas_equalTo(self.summaryTextView).offset(kMargin);    // 设置边距
         make.right.mas_equalTo(self.summaryTextView).offset(-kMargin);
@@ -193,10 +199,10 @@
         make.right.mas_equalTo(self.actorsInfoTextView).offset(-kMargin);
         make.bottom.mas_lessThanOrEqualTo(self.actorsInfoTextView).offset(-kMargin);
     }];
-    [self.kMoreTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.mas_equalTo(self.kMoreTextView).offset(kMargin);
-        make.right.mas_equalTo(self.kMoreTextView).offset(-kMargin);
-        make.bottom.mas_lessThanOrEqualTo(self.kMoreTextView).offset(-kMargin);
+    [self.moreTextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.mas_equalTo(self.moreTextView).offset(kMargin);
+        make.right.mas_equalTo(self.moreTextView).offset(-kMargin);
+        make.bottom.mas_lessThanOrEqualTo(self.moreTextView).offset(-kMargin);
     }];
     
     return ;
@@ -308,11 +314,11 @@
     return _actorsInfoTextView;
 }
 
-- (UIView *)kMoreTextView {
-    if (!_kMoreTextView) {
-        _kMoreTextView = [[UIView alloc] init];
+- (UIView *)moreTextView {
+    if (!_moreTextView) {
+        _moreTextView = [[UIView alloc] init];
     }
-    return _kMoreTextView;
+    return _moreTextView;
 }
 
 - (UILabel *)summaryTextLabel {
@@ -345,19 +351,19 @@
     return _actorsInfoTextLabel;
 }
 
-- (UILabel *)kMoreTextLabel {
-    if (!_kMoreTextLabel) {
-        _kMoreTextLabel = [[UILabel alloc] init];
+- (UILabel *)moreTextLabel {
+    if (!_moreTextLabel) {
+        _moreTextLabel = [[UILabel alloc] init];
         
-        _kMoreTextLabel.layer.borderColor = [UIColor redColor].CGColor;
-        _kMoreTextLabel.layer.borderWidth = kBoderWidth;
-        _kMoreTextLabel.layer.cornerRadius = kCornerRadius;
-        _kMoreTextLabel.layer.masksToBounds = YES;
+        _moreTextLabel.layer.borderColor = [UIColor redColor].CGColor;
+        _moreTextLabel.layer.borderWidth = kBoderWidth;
+        _moreTextLabel.layer.cornerRadius = kCornerRadius;
+        _moreTextLabel.layer.masksToBounds = YES;
         
-        _kMoreTextLabel.font = [UIFont systemFontOfSize:kFontOfTextSize];
-        _kMoreTextLabel.numberOfLines = 0;
+        _moreTextLabel.font = [UIFont systemFontOfSize:kFontOfTextSize];
+        _moreTextLabel.numberOfLines = 0;
     }
-    return _kMoreTextLabel;
+    return _moreTextLabel;
 }
 
 @end

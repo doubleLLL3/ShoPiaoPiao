@@ -26,7 +26,7 @@
 
 @interface BKEInfoTableViewCell ()
 
-// 电影封面、标题、评分、导演、演员表、购票按钮
+// 电影封面、标题、副标题、片长、又名
 @property(nonatomic, strong) UIImageView *leftImageView;
 @property(nonatomic, strong) UILabel *titleLabel;
 @property(nonatomic, strong) UILabel *subtitleLabel;
@@ -47,6 +47,7 @@
     return self;
 }
 
+// 更新Cell数据
 - (void) updateMovieBasic:(BKEMovieBasicModel *)movieBasic movieDetail:(BKEMovieDetailModel *)movieDetail {
     [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:movieBasic.imageURL]];
     [self.titleLabel setText:movieBasic.name];
