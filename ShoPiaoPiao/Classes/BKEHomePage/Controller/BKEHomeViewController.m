@@ -41,7 +41,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define kPullTitleForRefreshing @"正在加载更多数据..."
 #define kPullTitleForNoMoreData @"没有更多数据了"
 
-static NSString *const kCellId = @"CellInfo";
+#define kCellId @"CellInfo"
 
 @interface BKEHomeViewController () <UITableViewDataSource, UITableViewDelegate, BKEHomeTableViewCellDelegate>
 

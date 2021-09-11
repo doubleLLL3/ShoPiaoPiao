@@ -34,9 +34,9 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define defaultTableViewCellHeight 50
 #define kRequestTimeoutInterval 5.0f
 
-static NSString *const kCellInfo = @"CellInfo";
-static NSString *const kCellDetail = @"CellDetail";
-static NSString *const kCellPurchase = @"CellPurchase";
+#define kCellInfo @"CellInfo"
+#define kCellDetail @"CellDetail"
+#define kCellPurchase @"CellPurchase"
 
 @interface BKEIntroViewController () <UITableViewDataSource, UITableViewDelegate, BKEPurchaseTableViewCellDelegate>
 
