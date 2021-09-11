@@ -16,6 +16,8 @@
 #define kToPurchaseState @"购票"
 #define kPurchasedState @"已购票"
 
+#define kShopeeColor [UIColor colorWithRed:238/255.0f green:77/255.0f blue:61/255.0f alpha:1.0f]
+
 @interface BKEPurchaseTableViewCell ()
 
 @property(nonatomic, strong) UIButton *purchaseButton;
@@ -63,7 +65,7 @@
 - (UIButton *)purchaseButton {
     if (!_purchaseButton) {
         _purchaseButton = [[UIButton alloc] init];
-        _purchaseButton.backgroundColor = [UIColor redColor];
+        _purchaseButton.backgroundColor = kShopeeColor;
         _purchaseButton.layer.cornerRadius = kCornerRadius;
         _purchaseButton.layer.masksToBounds = YES;
         _purchaseButton.titleLabel.font = [UIFont systemFontOfSize:kFontOfButtonSize];

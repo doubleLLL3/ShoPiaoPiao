@@ -30,6 +30,8 @@
 #define kKeyActorURL @"sharing_url"
 #define kMoreText @"赶紧购票吧！"
 
+#define kShopeeColor [UIColor colorWithRed:238/255.0f green:77/255.0f blue:61/255.0f alpha:1.0f]
+
 @interface BKEDetailTableViewCell () <UIScrollViewDelegate>
 
 @property(nonatomic, strong) UIView *tabsView;
@@ -271,7 +273,7 @@
         // 设置文本
         _moreTabLabel.font = [UIFont systemFontOfSize:kFontOfTabSize];
         _moreTabLabel.textAlignment = NSTextAlignmentCenter;
-        _moreTabLabel.textColor = [UIColor redColor];
+        _moreTabLabel.textColor = kShopeeColor;
         [_moreTabLabel setText:kMoreTabText];
         // 设置手势
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(moreTabTapAction)];
@@ -355,7 +357,7 @@
     if (!_moreTextLabel) {
         _moreTextLabel = [[UILabel alloc] init];
         
-        _moreTextLabel.layer.borderColor = [UIColor redColor].CGColor;
+        _moreTextLabel.layer.borderColor = kShopeeColor.CGColor;
         _moreTextLabel.layer.borderWidth = kBoderWidth;
         _moreTextLabel.layer.cornerRadius = kCornerRadius;
         _moreTextLabel.layer.masksToBounds = YES;

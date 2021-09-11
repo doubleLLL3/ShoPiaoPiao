@@ -34,6 +34,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define kRequestURLForMovieBasicWithIndex @"http://0.0.0.0:8888/data%ld.json"
 #define kIndexForFirstRequest (NSInteger)0
 
+#define kCellId @"CellInfo"
 #define kIntroViewControllerTitle @"电影详情"
 #define kDataNameOfResponseObject @"data"
 #define kDropDownTitleForIdle @"下拉可以刷新"
@@ -44,7 +45,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define kPullTitleForRefreshing @"正在加载更多数据..."
 #define kPullTitleForNoMoreData @"没有更多数据了"
 
-#define kCellId @"CellInfo"
+#define kShopeeColor [UIColor colorWithRed:238/255.0f green:77/255.0f blue:61/255.0f alpha:1.0f]
 
 @interface BKEHomeViewController () <UITableViewDataSource, UITableViewDelegate, BKEHomeTableViewCellDelegate>
 
@@ -102,7 +103,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     }  // ❗️可以在getter方法里注册所有的Cell
     [cell updateMovieBasic:self.movieList[indexPath.row]];
 
-    cell.purchaseButton.backgroundColor = [UIColor redColor];
+    cell.purchaseButton.backgroundColor = kShopeeColor;
 
     [cell.purchaseButton setEnabled:YES];
 

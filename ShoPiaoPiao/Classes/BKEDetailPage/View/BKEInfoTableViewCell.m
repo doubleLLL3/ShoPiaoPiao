@@ -24,6 +24,8 @@
 #define kDurationsPrefix @"片长："
 #define kAkasPrefix @"又名："
 
+#define kShopeeColor [UIColor colorWithRed:238/255.0f green:77/255.0f blue:61/255.0f alpha:1.0f]
+
 @interface BKEInfoTableViewCell ()
 
 // 电影封面、标题、副标题、片长、又名
@@ -133,7 +135,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:kFontOfTitleLabelSize];
-        _titleLabel.textColor = [UIColor blueColor];
+        _titleLabel.textColor = kShopeeColor;
     }
     return _titleLabel;
 }

@@ -18,12 +18,55 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShoPiaoPiao.png" translatesAutoresizingMaskIntoConstraints="NO" id="XFl-Mo-UBd">
+                                <rect key="frame" x="67.5" y="202" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Zel-qk-Y2i"/>
+                                    <constraint firstAttribute="width" secondItem="XFl-Mo-UBd" secondAttribute="height" multiplier="15:8" id="wYK-sa-vea"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Title_ShoPiaoPiao.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wce-gu-tr0">
+                                <rect key="frame" x="139" y="338" width="97" height="51.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="Fwa-xX-Lsy"/>
+                                    <constraint firstAttribute="width" secondItem="Wce-gu-tr0" secondAttribute="height" multiplier="32:17" id="fUi-zg-zJy"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Slogan_ShpPiaoPiao.png" translatesAutoresizingMaskIntoConstraints="NO" id="t1X-Hq-evK">
+                                <rect key="frame" x="136" y="380" width="103" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="103" id="EYz-tv-Kd3"/>
+                                    <constraint firstAttribute="width" secondItem="t1X-Hq-evK" secondAttribute="height" multiplier="103:35" id="QbM-E7-ITD"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="XFl-Mo-UBd" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="202" id="1hI-Sp-zeE"/>
+                            <constraint firstItem="t1X-Hq-evK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2pA-uE-YSg"/>
+                            <constraint firstItem="Wce-gu-tr0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="839-Aa-hfO"/>
+                            <constraint firstItem="XFl-Mo-UBd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="D7g-Ue-cGK"/>
+                            <constraint firstItem="Wce-gu-tr0" firstAttribute="top" secondItem="XFl-Mo-UBd" secondAttribute="bottom" constant="8" id="IE8-kU-maq"/>
+                            <constraint firstItem="Wce-gu-tr0" firstAttribute="centerX" secondItem="XFl-Mo-UBd" secondAttribute="centerX" id="PeT-7w-D1i"/>
+                            <constraint firstItem="Wce-gu-tr0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="123" id="bP0-eA-dYa"/>
+                            <constraint firstItem="t1X-Hq-evK" firstAttribute="centerX" secondItem="XFl-Mo-UBd" secondAttribute="centerX" id="lTj-rk-4CB"/>
+                            <constraint firstItem="t1X-Hq-evK" firstAttribute="top" secondItem="XFl-Mo-UBd" secondAttribute="bottom" constant="50" id="rhR-iV-OKM"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="AccentColor"/>
+    <resources>
+        <image name="ShoPiaoPiao.png" width="1410" height="1410"/>
+        <image name="Slogan_ShpPiaoPiao.png" width="773" height="140"/>
+        <image name="Title_ShoPiaoPiao.png" width="477" height="161"/>
+        <namedColor name="AccentColor">
+            <color red="0.87800002098083496" green="0.35699999332427979" blue="0.20800000429153442" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
 </document>
