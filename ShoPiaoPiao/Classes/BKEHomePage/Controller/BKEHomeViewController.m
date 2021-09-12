@@ -218,6 +218,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     if (!_homeTableView) {
         _homeTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
         _homeTableView.backgroundColor = [UIColor whiteColor];
+        _homeTableView.tableFooterView = [UIView new];  // 隐藏多余分割线
         _homeTableView.dataSource = self;
         _homeTableView.delegate = self;
     }

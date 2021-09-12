@@ -19,7 +19,7 @@
 #define kSubtitleLabelHeight 60
 #define kAkaLabelHeight 30
 #define kFontOfSize 12
-#define kFontOfTitleLabelSize 16
+#define kFontOfTitleLabelSize 18
 
 #define kDurationsPrefix @"片长："
 #define kAkasPrefix @"又名："

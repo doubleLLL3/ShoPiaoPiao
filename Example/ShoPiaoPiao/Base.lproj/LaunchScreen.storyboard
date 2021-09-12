@@ -62,7 +62,7 @@
     </scenes>
     <color key="tintColor" name="AccentColor"/>
     <resources>
-        <image name="ShoPiaoPiao.png" width="1410" height="1410"/>
+        <image name="ShoPiaoPiao.png" width="1431" height="1431"/>
         <image name="Slogan_ShpPiaoPiao.png" width="773" height="140"/>
         <image name="Title_ShoPiaoPiao.png" width="477" height="161"/>
         <namedColor name="AccentColor">

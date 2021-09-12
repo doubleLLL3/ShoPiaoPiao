@@ -166,7 +166,8 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
     if (!_introTableView) {
         _introTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         _introTableView.backgroundColor = [UIColor whiteColor];
-        _introTableView.separatorStyle = UITableViewCellSeparatorStyleNone;  // 隐藏分割线
+//        _introTableView.separatorStyle = UITableViewCellSeparatorStyleNone;  // 隐藏所有分割线
+        _introTableView.tableFooterView = [UIView new];  // 隐藏多余分割线
         _introTableView.dataSource = self;
         _introTableView.delegate = self;
     }
