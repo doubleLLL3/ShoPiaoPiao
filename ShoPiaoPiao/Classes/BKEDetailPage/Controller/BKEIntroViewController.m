@@ -36,6 +36,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 
 #define kRequestURLForMovieDetailWithMovieId @"https://douban.8610000.xyz/data/%@.json"
 
+#define kIntroViewControllerTitle @"电影详情"
 #define kCellInfo @"CellInfo"
 #define kCellDetail @"CellDetail"
 #define kCellPurchase @"CellPurchase"
@@ -56,6 +57,8 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.navigationItem.title = kIntroViewControllerTitle;
     
     [self.view addSubview:self.introTableView];
     

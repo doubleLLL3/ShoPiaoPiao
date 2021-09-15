@@ -34,8 +34,8 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 #define kRequestURLForMovieBasicWithIndex @"http://0.0.0.0:8888/data%ld.json"
 #define kIndexForFirstRequest (NSInteger)0
 
+#define kHomeViewControllerTitle @"推荐电影"
 #define kCellId @"CellInfo"
-#define kIntroViewControllerTitle @"电影详情"
 #define kDataNameOfResponseObject @"data"
 #define kDropDownTitleForIdle @"下拉可以刷新"
 #define kDropDownTitleForPulling @"松开立即刷新"
@@ -72,6 +72,7 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = kHomeViewControllerTitle;
     self.movieListIndex = 0;
     
     [self.view addSubview:self.homeTableView];
@@ -121,7 +122,6 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 // 点击Cell后进入详细信息页
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.introViewController = [[BKEIntroViewController alloc] init];
-    self.introViewController.title = kIntroViewControllerTitle;
     
     self.movieBasic = self.movieList[indexPath.row];
     [self.introViewController receiveMovieBasic:self.movieBasic];
@@ -235,19 +235,6 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 - (MJRefreshNormalHeader *)dropDownHeader {
     if (!_dropDownHeader) {
         _dropDownHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(requestMovieList)];
-        
-//        // Set the ordinary state of animated images
-//        UIImage *idleImages = [UIImage imageNamed:idleImages];
-//        [_dropDownHeader setImages:@[idleImages] forState:MJRefreshStateIdle];
-//        // Set the pulling state of animated images（Enter the status of refreshing as soon as loosen）
-//        UIImage *pullingImages = [UIImage imageNamed:pullingImages];
-//        [_dropDownHeader setImages:@[pullingImages] forState:MJRefreshStatePulling];
-//        // Set the refreshing state of animated images
-////        SDAnimatedImage *refreshingImages = [SDAnimatedImage imageNamed:@"refreshingImages.gif"];
-////        [_dropDownHeader setImages:@[refreshingImages] forState:MJRefreshStateRefreshing];
-//        UIImage *refreshingImages = [UIImage imageNamed:refreshingImages];
-//        [_dropDownHeader setImages:@[refreshingImages] forState:MJRefreshStateRefreshing];
-        
         _dropDownHeader.lastUpdatedTimeLabel.hidden = YES;
         
         [_dropDownHeader setTitle:kDropDownTitleForIdle forState:MJRefreshStateIdle];

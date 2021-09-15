@@ -39,7 +39,7 @@ DEPENDENCIES:
   - YYModel
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - Masonry
     - MBProgressHUD
@@ -60,6 +60,6 @@ SPEC CHECKSUMS:
   ShoPiaoPiao: ea41ecaf66d949af7c48723d1268086d939f09e5
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: effaf0e5452063c73019e30177681972cb718928
+PODFILE CHECKSUM: 6e40bc48a0ae3c01dcb56b226d85b0b7cccd31bd
 
 COCOAPODS: 1.10.1

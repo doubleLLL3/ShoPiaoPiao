@@ -32,7 +32,7 @@
 #define kKeyActorURL @"sharing_url"
 #define kMoreText @"赶紧购票吧！"
 #define kShadowOffset CGSizeMake(0, 0)
-#define kShadowOpacity 0.8
+#define kShadowOpacity 0.5
 
 #define kShopeeColor [UIColor colorWithRed:238/255.0f green:77/255.0f blue:61/255.0f alpha:1.0f]
 
