@@ -57,7 +57,6 @@ __strong __typeof__(VAR) VAR = VAR_weak_;
 @property(nonatomic, assign) NSInteger movieListIndex;
 @property(nonatomic, strong) BKEIntroViewController *introViewController;
 
-
 @end
 
 @implementation BKEHomeViewController
