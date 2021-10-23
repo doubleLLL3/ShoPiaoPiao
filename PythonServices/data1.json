@@ -1,0 +1,54 @@
+{
+   "code": 0,
+   "msg": "success",
+   "data": [
+      {
+         "name": "亚当的苹果",
+         "rating": 8.2,
+         "director": "安诺斯·托马斯·延森",
+         "starring": "乌尔里奇·汤姆森 / 麦斯·米科尔森 / 尼可拉斯·布若 / 帕普丽卡·斯汀 / 尼古拉·雷·卡斯 / 托马斯·维尔姆·詹森 / Ali Kazim / Ole Thestrup / Gyrd Løfquist / 拉斯·兰特 / Peter Reichhardt",
+         "imageURL": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2509945381.webp",
+         "movieId": "1478398"
+      },
+      {
+         "name": "独自等待",
+         "rating": 8.2,
+         "director": "伍仕贤",
+         "starring": "夏雨 / 李冰冰 / 龚蓓苾 / 高旗 / 吴超 / 高亚麟 / 涂松岩 / 伍仕贤 / 李丽虹 / 袁泉 / 周润发 / 陈羽凡 / 葛存壮 / 英达 / 吴大维",
+         "imageURL": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2205470686.webp",
+         "movieId": "1308741"
+      },
+      {
+         "name": "胜利之光",
+         "rating": 8.2,
+         "director": "彼得·博格",
+         "starring": "比利·鲍伯·松顿 / 卢卡斯·布莱克 / 加内特·赫德兰 / 德里克·卢克 / 艾梅柏·希尔德",
+         "imageURL": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2398151156.webp",
+         "movieId": "1308815"
+      },
+      {
+         "name": "隐剑鬼爪",
+         "rating": 8.2,
+         "director": "山田洋次",
+         "starring": "永濑正敏 / 松隆子 / 吉冈秀隆 / 小泽征悦 / 田畑智子 / 倍赏千惠子 / 田中邦卫 / 绫田俊树 / 神户浩 / 光本幸子 / 高岛礼子 / 前田淳 / 赤冢真人",
+         "imageURL": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p691070850.webp",
+         "movieId": "1309005"
+      },
+      {
+         "name": "火柴人",
+         "rating": 8.2,
+         "director": "雷德利·斯科特",
+         "starring": "尼古拉斯·凯奇 / 山姆·洛克威尔 / 艾莉森·洛曼 / 布鲁斯·奥尔特曼 / 布鲁斯·麦克吉尔 / 珍妮·奥哈拉 / 史蒂夫·艾斯汀 / 贝丝·格兰特 / 谢拉·柯雷 / 弗兰·克朗茨",
+         "imageURL": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1757301336.webp",
+         "movieId": "1307542"
+      },
+      {
+         "name": "哆啦A梦：大雄与风之使者",
+         "rating": 8.4,
+         "director": "芝山努",
+         "starring": "大山信代 / 小原乃梨子 / 野村道子 / 肝付兼太 / 立壁和也 / 爱河里花子 / 穗积隆信 / 金井美香 / 小林清志",
+         "imageURL": "https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2624446002.webp",
+         "movieId": "1457926"
+      }
+   ]
+}

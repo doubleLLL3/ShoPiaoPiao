@@ -18,6 +18,30 @@ To run the example project, `clone`  the repo, and run `pod install` from the Ex
 
 如果想跑下面的Demo，首先 `clone` 这个仓库，并在Example目录下运行 `pod install` 命令。
 
+<br>
+
+⚠️：在运行工程的同时还需要在**本地**开启**后端服务**，提供首页的**电影列表数据**：
+
+1）`cd` 到PythonServices目录下
+
+2）运行 `python -m SimpleHTTPServer 8888` ，注意请求时的地址和端口号为 0.0.0.0 和 8888
+
+*相关代码*：
+
+./ShoPiaoPiao/Classes/BKEHomePage/Controller/**BKEHomeViewController.m**：
+
+```objective-c
+#define kRequestURLForMovieBasicWithIndex @"http://0.0.0.0:8888/data%ld.json"
+```
+
+PS：
+
+- 首页的**电影列表数据**来自本地服务，详情页的**电影详细数据**来自网络。
+
+- http协议的网址默认不能被访问，请确认是否设置了权限。
+
+<br>
+
 ![虾票票V1.0](./ShoPiaoPiaoV1.0.gif)
 
 **核心代码结构**：
