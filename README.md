@@ -18,7 +18,7 @@ To run the example project, `clone`  the repo, and run `pod install` from the Ex
 
 如果想跑下面的Demo，首先 `clone` 这个仓库，并在Example目录下运行 `pod install` 命令。
 
-![虾票票V1.0](https://cdn.jsdelivr.net/gh/doubleLLL3/blogImgs@main/img/%E8%99%BE%E7%A5%A8%E7%A5%A8V1.0.gif-0.0000-25.2300.gif)
+![虾票票V1.0](./ShoPiaoPiaoV1.0.gif)
 
 ## Welcome to issue! 
 
