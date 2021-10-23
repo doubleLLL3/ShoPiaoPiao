@@ -20,6 +20,37 @@ To run the example project, `clone`  the repo, and run `pod install` from the Ex
 
 ![虾票票V1.0](./ShoPiaoPiaoV1.0.gif)
 
+**核心代码结构**：
+
+```
+ShoPiaoPiao
+└── Classes
+    ├── BKEDetailPage                       # 详情页
+    │   ├── Controller
+    │   │   ├── BKEIntroViewController.h
+    │   │   └── BKEIntroViewController.m
+    │   ├── Model
+    │   │   ├── BKEMovieDetailModel.h
+    │   │   └── BKEMovieDetailModel.m
+    │   └── View
+    │       ├── BKEDetailTableViewCell.h
+    │       ├── BKEDetailTableViewCell.m    ## 详细介绍单元
+    │       ├── BKEInfoTableViewCell.h
+    │       ├── BKEInfoTableViewCell.m      ## 基本信息单元
+    │       ├── BKEPurchaseTableViewCell.h
+    │       └── BKEPurchaseTableViewCell.m  ## 购买单元
+    └── BKEHomePage                         # 主页
+        ├── Controller
+        │   ├── BKEHomeViewController.h
+        │   └── BKEHomeViewController.m
+        ├── Model
+        │   ├── BKEMovieBasicModel.h
+        │   └── BKEMovieBasicModel.m
+        └── View
+            ├── BKEHomeTableViewCell.h
+            └── BKEHomeTableViewCell.m      ## 电影条目单元
+```
+
 ## Welcome to issue! 
 
 欢迎交流！
