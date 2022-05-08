@@ -65,7 +65,7 @@
     return self;
 }
 
-- (void) updateMovieDetail:(BKEMovieDetailModel *)movieDetail {
+- (void)updateMovieDetail:(BKEMovieDetailModel *)movieDetail {
     [self.summaryTextLabel setText:movieDetail.intro];
     
     NSMutableString *actorsInfo = [NSMutableString string];
